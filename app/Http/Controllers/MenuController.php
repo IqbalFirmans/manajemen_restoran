@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\StoreMenuRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateMenuRequest;
+use App\Models\Category;
 
 class MenuController extends Controller
 {
@@ -15,7 +16,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::all();
+        $menus = Menu::with('category')->latest()->get();
         return view('menus.index', compact('menus'));
     }
 
@@ -24,7 +25,9 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menus.create');
+        $categories = Category::all();
+
+        return view('menus.create', compact('categories'));
     }
 
     /**
@@ -33,16 +36,11 @@ class MenuController extends Controller
     public function store(StoreMenuRequest $request)
     {
         try {
-            $image = $request->file('image')->store('menu-image', 'public');
-            $data = [
-                'name' => $request->name,
-                'price' => $request->price,
-                'description' => $request->description,
-                'image' => $image,
+            $validateData = $request->validated();
 
-            ];
+            $validateData['image'] = $request->file('image')->store('menu-image', 'public');
 
-            Menu::create($data);
+            Menu::create($validateData);
 
             return redirect()->route('menus.index')->with('success', 'Create Menu Success!');
         } catch (\Throwable $e) {
@@ -64,7 +62,10 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        return view('menus.edit', compact('menu'));
+
+        $categories = Category::all();
+
+        return view('menus.edit', compact('menu', 'categories'));
     }
 
     /**
@@ -78,13 +79,13 @@ class MenuController extends Controller
             if ($request->hasFile('image')) {
 
                 if ($request->oldImage) {
-                    Storage::disk('public')->delete($menu->image);
+                    Storage::disk('public')->delete($request->oldImage);
                 }
 
                 $validateData['image'] = $request->file('image')->store('menu-image', 'public');
             }
 
-            $validateData['excerpt'] = Str::limit(strip_tags($request->description), 100);
+            // $validateData['excerpt'] = Str::limit(strip_tags($request->description), 100);
 
             $menu->update($validateData);
 

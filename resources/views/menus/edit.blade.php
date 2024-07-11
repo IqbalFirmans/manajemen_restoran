@@ -16,14 +16,14 @@
     @endif
 
     <h3>Create Menu</h3>
-    <input type="hidden" value="{{ $menu->image }}" name="image">
-    <form action="{{ route('menus.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('menus.update', $menu->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('post')
+        @method('put')
 
+        <input type="hidden" value="{{ $menu->image }}" name="oldImage">
         <div>
             <label for="name">Product Name</label>
-            <input type="text" id="name" name="name" value="{{ $menu->name }}">        
+            <input type="text" id="name" name="name" value="{{ $menu->name }}">
         </div>
         <div>
             <label for="price">Product Price</label>
@@ -37,10 +37,9 @@
             <label for="category_id">Categories</label>
             <select name="category_id" id="category_id">
                 <option value="">Select Category</option>
-                {{-- @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}> {{ $category->name }} </option>
-                @endforeach --}}
-                <option value="percobaan">kategori percobaan</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ $menu->category_id == $category->id ? 'selected' : '' }}> {{ $category->name }} </option>
+                @endforeach
             </select>
         </div>
             <div>
@@ -55,7 +54,7 @@
                 <img id="img-preview" src="{{ $menu->image ? asset('storage/' . $menu->image) : '' }}" alt="unavailable" style="max-width: 50; max-height: 50;">
             </div>
         </div>
-        <a href="{{ route('menus.index') }}"><button>Back</button></a>
+        <a href="{{ route('menus.index') }}">Back</a>
         <button type="submit">Submit</button>
     </form>
 </body>

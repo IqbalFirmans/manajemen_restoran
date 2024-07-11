@@ -11,7 +11,7 @@ class UpdateMenuRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|max:255',
+            'price' => 'required|numeric|min:0',
+            'description' => 'required|max:3000',
+            'image' => ['file', 'mimes:png,jpg,jpeg,webp', 'max:2048', $this->method() == "PUT" ? 'nullable' : 'required'],
+            'category_id' => 'required|numeric'
         ];
     }
 }
