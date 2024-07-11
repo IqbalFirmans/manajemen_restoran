@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->unsignedBigInteger('customer_id');
-            $table->string('status')->default('pendinga');
+            $table->string('status')->default('pending');
+            $table->decimal('total_payment');
+            $table->string('payment_id')->default('1');
             $table->timestamps();
         });
     }
