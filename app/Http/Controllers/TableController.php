@@ -13,7 +13,9 @@ class TableController extends Controller
      */
     public function index()
     {
-        //
+        $tables = Table::all();
+
+        return view('tables.index', compact('tables'));
     }
 
     /**
@@ -21,7 +23,8 @@ class TableController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('tables.create');
     }
 
     /**
@@ -29,7 +32,14 @@ class TableController extends Controller
      */
     public function store(StoreTableRequest $request)
     {
-        //
+        try {
+            Table::create($request->validated());
+
+            return redirect()->route('tables.index')->with('success', 'Create Table success!');
+        } catch (\Throwable $e) {
+
+            return redirect()->route('tables.index')->with('error', 'Failed create table.');
+        }
     }
 
     /**
@@ -45,7 +55,7 @@ class TableController extends Controller
      */
     public function edit(Table $table)
     {
-        //
+        return view('tables.edit', compact('table'));
     }
 
     /**
@@ -53,7 +63,16 @@ class TableController extends Controller
      */
     public function update(UpdateTableRequest $request, Table $table)
     {
-        //
+
+        try {
+            $table->update($request->validated());
+
+            return redirect()->route('tables.index')->with('success', 'Update Table success!');
+
+        } catch (\Throwable $e) {
+
+            return redirect()->route('tables.index')->with('error', 'Failed update table.');
+        }
     }
 
     /**
@@ -61,6 +80,14 @@ class TableController extends Controller
      */
     public function destroy(Table $table)
     {
-        //
+        try {
+            $table->delete();
+
+            return redirect()->route('tables.index')->with('success', 'Delete Table success!');
+
+        } catch (\Throwable $e) {
+
+            return redirect()->route('tables.index')->with('error', 'Failed delete table.');
+        }
     }
 }

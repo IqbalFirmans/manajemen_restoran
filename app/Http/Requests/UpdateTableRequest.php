@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTableRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateTableRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,14 @@ class UpdateTableRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'table_number' => [
+                'required',
+                'min:1',
+                'numeric',
+                Rule::unique('tables')->ignore($this->table)
+            ],
+            'capacity' => 'required|numeric|min:1|max:10',
+            'status' => 'required|string|in:available,occupied,reserved'
         ];
     }
 }
