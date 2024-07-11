@@ -27,7 +27,7 @@
                     <td>{{ $customer->email }}</td>
                     <td>{{ $customer->phone }}</td>
                     <td>
-                        <a href="{{ route('customers.edit', $customer->id) }}">Edit</a>
+                        <a href="{{ route('customers.edit', $customer->id) }}"><button>Edit</button></a>
                         <form action="{{ route('customers.destroy', $customer->id) }}" method="post">
                             @csrf
                             @method('delete')
