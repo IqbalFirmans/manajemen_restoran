@@ -33,10 +33,16 @@ class MenuController extends Controller
     public function store(StoreMenuRequest $request)
     {
         try {
-            $validateData['image'] = $request->file('image')->store('menu-image', 'public');
-            // $validateData['excerpt'] = Str::limit(strip_tags($request->description), 100);
+            $image = $request->file('image')->store('menu-image', 'public');
+            $data = [
+                'name' => $request->name,
+                'price' => $request->price,
+                'description' => $request->description,
+                'image' => $image,
 
-            Menu::create($validateData);
+            ];
+
+            Menu::create($data);
 
             return redirect()->route('menus.index')->with('success', 'Create Menu Success!');
         } catch (\Throwable $e) {
