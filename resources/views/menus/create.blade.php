@@ -22,7 +22,7 @@
 
         <div>
             <label for="name">Product Name</label>
-            <input type="text" id="name" name="name">        
+            <input type="text" id="name" name="name">
         </div>
         <div>
             <label for="price">Product Price</label>
@@ -36,11 +36,9 @@
             <label for="category_id">Categories</label>
             <select name="category_id" id="category_id">
                 <option value="">Select Category</option>
-                {{-- @foreach($categories as $category)
+                @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}> {{ $category->name }} </option>
-                @endforeach --}}
-                <option value="percobaan">kategori percobaan</option>
-            </select>
+                @endforeach
         </div>
         <div>
             <label for="image">Choose file</label>
@@ -48,8 +46,8 @@
             <input type="file" id="image" name="image" onchange="document.getElementById('img-preview').src = window.URL.createObjectURL(this.files[0])">
         </div>
         <div>
-            <label>Image Preview</label>  
-                <img class="card-img-top img-fluid" style="height: 300px; object-fit: cover" id="img-preview"> 
+            <label>Image Preview</label>
+                <img class="card-img-top img-fluid" style="height: 300px; object-fit: cover" id="img-preview">
             </div>
         </div>
         <a href="{{ route('menus.index') }}"><button>Back</button></a>

@@ -127,12 +127,14 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index Menus</title>
 </head>
+
 <body>
     <h3>Data Menu</h3>
     <a href="{{ route('menus.create') }}" class="btn btn-primary"><button>Add Menu</button></a>
@@ -143,8 +145,7 @@
                 <th>No</th>
                 <th>Name</th>
                 <th>Price</th>
-                <th>Excerpt</th>
-                <th>Description</th> 
+                <th>Description</th>
                 <th>Image</th>
                 <th>Kategori</th>
                 <th>Aksi</th>
@@ -153,15 +154,22 @@
         <tbody>
             @forelse ($menus as $menu)
                 <tr>
-                    <td>{{ $menu->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $menu->name }}</td>
                     <td>{{ $menu->price }}</td>
-                    <td>{{ $menu->excerpt }}</td>
                     <td>{{ $menu->description }}</td>
                     <td><img src="{{ asset('storage/' . $menu->image) }}" alt="unavailable" style="height: 50px"></td>
-                    <td>sedang tidak ada</td>
+                    <td>{{ $menu->category->name }}</td>
                     <td>
                         <a href="{{ route('menus.edit', $menu->id) }}"><button>Edit</button></a>
+
+                        <form id="delete-form-{{ $menu->id }}" action="{{ route('menus.destroy', $menu->id) }}"
+                            method="POST" class="d-none">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Delete</button>
+                        </form>
+
                     </td>
                 </tr>
             @empty
@@ -172,4 +180,5 @@
         </tbody>
     </table>
 </body>
+
 </html>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMenuRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class StoreMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
-            'price' => 'required|numeric|min:0',
-            'description' => 'required|max:3000',
-            'image' => ['file', 'mimes:png,jpg,jpeg,webp', 'max:2048', $this->method() == "PUT" ? 'nullable' : 'required'],
-            'category_id' => 'required|numeric'
+            'name' => 'required|min:3|unique:categories,name,' . $this->route('category'),
+            'slug' => 'required|min:3|unique:categories,slug,' . $this->route('category')
         ];
     }
 }
