@@ -3,41 +3,56 @@
 @section('title', 'Create Category')
 @section('content')
 
-    <section class="bg-gray-100">
-        <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
+    <section class="mt-4">
+        <div class="container grid px-6 mx-auto">
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+                    Create New Category
+                </h4>
 
-                <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-                    <form action="{{ route('categories.store') }}" class="space-y-4" method="POST">
-                        @csrf
-                        <div>
-                            <label class="sr-only" for="name">Name</label>
-                            <input class="w-full rounded-lg border-red-500 p-3 text-sm" placeholder="Name" type="text"
-                                id="name" name="name" value="{{ old('name') }}" />
+                <form action="{{ route('categories.store') }}" method="post">
+                    @csrf
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Category Name
+                        </span>
+                        <input
+                            class="block w-full mt-2 text-sm focus:outline-none form-input @error('name') border-red-600 @enderror"
+                            placeholder="Name" name="name" value="{{ old('name') }}" />
 
-                            @error('name')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div>
-                            <label class="sr-only" for="slug">Slug</label>
-                            <input class="w-full rounded-lg border-gray-200 p-3 text-sm" placeholder="Slug" type="text"
-                                id="slug" name="slug"/>
+                        @error('name')
+                            <span class="text-xs text-red-600 dark:text-red-400">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </label>
 
-                            @error('slug')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Category Slug
+                        </span>
+                        <input
+                            class="block w-full mt-2 text-sm focus:outline-none form-input @error('slug') border-red-600 @enderror"
+                            placeholder="Slug" name="slug" value="{{ old('slug') }}" />
 
-                        <div class="mt-4 flex justify-end gap-3">
-                            <a href="/categories" class="inline-block w-full rounded-lg bg-red-600 px-5 py-3 font-medium text-white sm:w-auto">Back</a>
-                            <button type="submit"
-                                class="inline-block w-full rounded-lg bg-indigo-600 px-5 py-3 font-medium text-white sm:w-auto">
-                                Create
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                        @error('slug')
+                            <span class="text-xs text-red-600 dark:text-red-400">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </label>
+
+                    <div class="flex justify-end items-center mb-2 mt-2 space-x-3">
+                        <a href="/categories"
+                            class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+                            <span>Back</span>
+                        </a>
+                        <button type="submit"
+                            class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            <span>Create</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
