@@ -15,6 +15,8 @@ class CustomerController extends Controller
     {
         $customers = Customer::all();
         return view('customers.index', compact('customers'));
+
+        
     }
 
     /**

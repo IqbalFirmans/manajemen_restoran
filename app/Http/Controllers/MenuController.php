@@ -16,7 +16,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::with('category')->latest()->get();
+        $menus = Menu::with('category')->latest()->paginate(5);
         return view('menus.index', compact('menus'));
     }
 

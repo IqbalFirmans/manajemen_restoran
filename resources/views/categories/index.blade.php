@@ -1,7 +1,6 @@
 @extends('layouts.main')
 
 @section('title', 'Categories')
-
 @section('content')
     <div class="container grid px-6 mx-auto">
 
@@ -19,6 +18,7 @@
                 </svg>
             </a>
         </div>
+        
         <div class="w-full overflow-hidden rounded-lg shadow-xs mb-5">
             <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">

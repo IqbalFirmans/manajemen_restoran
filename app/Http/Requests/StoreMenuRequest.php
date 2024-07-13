@@ -25,7 +25,7 @@ class StoreMenuRequest extends FormRequest
             'name' => 'required|max:255',
             'price' => 'required|numeric|min:0',
             'description' => 'required|max:3000',
-            'image' => ['file', 'mimes:png,jpg,jpeg,webp', 'max:2048', $this->method() == "PUT" ? 'nullable' : 'required'],
+            'image' => ['file', 'mimes:png,jpg,jpeg,webp', 'max:4048', $this->method() == "PUT" ? 'nullable' : 'required'],
             'category_id' => 'required|numeric'
         ];
     }
