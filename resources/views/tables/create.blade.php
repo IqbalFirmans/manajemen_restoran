@@ -1,43 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create Table</title>
-</head>
-<body>
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <ul>
-                <li>{{ $error }}</li>
-            </ul>
-        @endforeach
-    @endif
+@extends('layouts.main')
 
-    <h3>Tambah Table</h3>
-    <form action="{{ route('tables.store') }}" method="post">
-        @csrf
+@section('title', 'Create Category')
+@section('content')
 
-        <div>
-            <label for="table_number">Table Number : </label>
-            <input type="number" name="table_number">
-        </div>
-        <div>
-            <label for="status">Table Status</label>
-            <select name="status" id="status">
-                <option value="available" selected>Available</option>
-                <option value="occupied">Occupied</option>
-                <option value="reserved">Reserved</option>
-            </select>
-        </div>
-        <div>
-            <label for="capacity">Capacity : </label>
-            <input type="number" name="capacity">
-        </div>
+    <section class="mt-4">
 
-        <a href="{{ route('tables.index') }}">Back</a>
-        <button type="submit">Simpan</button>
-    </form>
-</body>
-</html>
+        <div class="container grid px-6 mx-auto">
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+                    Create New Table
+                </h4>
+
+                <form action="{{ route('tables.store') }}" method="post">
+                    @csrf
+                    <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">
+                                Table Number
+                            </span>
+                            <input type="number"
+                                class="block w-full mt-2 text-sm focus:outline-none form-input @error('table_number') border-red-600 @enderror"
+                                placeholder="No." name="table_number" value="{{ old('table_number') }}" />
+
+                            @error('table_number')
+                                <span class="text-xs text-red-600 dark:text-red-400">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </label>
+
+
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">
+                                Table Capacity
+                            </span>
+                            <input type="number"
+                                class="block w-full mt-2 text-sm focus:outline-none form-input @error('capacity') border-red-600 @enderror"
+                                placeholder="Capacity" name="capacity" value="{{ old('capacity') }}" />
+
+                            @error('capacity')
+                                <span class="text-xs text-red-600 dark:text-red-400">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </label>
+
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">
+                                Status
+                            </span>
+                            <select
+                                class="block w-full mt-2 text-sm focus:outline-none form-select @error('status') border-red-600 @enderror"
+                                name="status">
+                                <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>
+                                    Available
+                                </option>
+                                <option value="occupied" {{ old('status') == 'occupied' ? 'selected' : '' }}>
+                                    Occupied
+                                </option>
+                                <option value="reserved" {{ old('status') == 'reserved' ? 'selected' : '' }}>
+                                    Reserved
+                                </option>
+                            </select>
+
+                            @error('status')
+                                <span class="text-xs text-red-600 dark:text-red-400">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </label>
+                    </div>
+
+                    <div class="flex justify-end items-center mb-2 mt-2 space-x-3">
+                        <a href="/tables"
+                            class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+                            <span>Back</span>
+                        </a>
+                        <button type="submit"
+                            class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            <span>Create</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+@endsection

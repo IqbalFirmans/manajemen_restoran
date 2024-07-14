@@ -6,9 +6,9 @@
 
         <div class="flex justify-between items-center mb-4">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Categories
+                Tables
             </h2>
-            <a href="{{ route('categories.create') }}"
+            <a href="{{ route('tables.create') }}"
                 class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 <span>Create</span>
                 <svg class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -35,10 +35,23 @@
                         @foreach ($tables as $table)
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
-                                    {{ $table->table_number }} .
+                                    {{ $table->table_number }}
                                 </td>
                                 <td class="px-4 py-3">
-                                    <p class="font-semibold text-sm">{{ $table->status }}</p>
+                                    <p class="font-semibold text-sm ">
+                                        <span class="px-2 py-1 font-semibold leading-tight
+                                            @if ($table->status == 'available')
+                                            text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100
+
+                                            @elseif($table->status == 'occupied')
+                                             text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700
+
+                                            @elseif($table->status == 'reserved')
+                                            text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600 @endif">
+                                            {{ $table->status }}
+                                        </span>
+                                    </p>
+
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     {{ $table->capacity }}
