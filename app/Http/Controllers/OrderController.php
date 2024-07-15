@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Payment;
 
 class OrderController extends Controller
 {
@@ -24,7 +26,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        $menus = Menu::all();
+        return view('orders.create', compact('menus'));
     }
 
     /**
@@ -32,13 +35,12 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-
+        // dd($request);
         // $now_time = Carbon::now()->format('Y-m-d H:i:s');
         $dataOrder = [
             'customer_id' => $request->customer_id,
             // 'order_time' => $now_time,
-            'status' => 'pending',
-            'payment_id' => $request->payment_id
+            'status' => 'pending'
         ];
 
         Order::create($dataOrder);
@@ -56,6 +58,12 @@ class OrderController extends Controller
             // dd($data);
             OrderDetail::create($data);
         }
+
+        $payment_data = [
+            'payment_id' => $request->payment_id,
+        ];
+
+        // Payment::created();
     }
 
     /**

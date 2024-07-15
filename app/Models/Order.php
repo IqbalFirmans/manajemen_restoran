@@ -15,4 +15,14 @@ class Order extends Model
         'total_payment',
         'payment_id',
     ];
+
+    function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    function payment()
+    {
+        return $this->belongsTo(Customer::class, 'payment_id');
+    }
 }
