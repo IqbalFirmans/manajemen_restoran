@@ -8,6 +8,7 @@ use App\Http\Requests\StoreMenuRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateMenuRequest;
 use App\Models\Category;
+use Intervention\Image\Facades\Image;
 
 class MenuController extends Controller
 {
@@ -16,7 +17,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::with('category')->latest()->get();
+        $menus = Menu::with('category')->latest()->paginate(5);
         return view('menus.index', compact('menus'));
     }
 
@@ -30,9 +31,6 @@ class MenuController extends Controller
         return view('menus.create', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreMenuRequest $request)
     {
         try {

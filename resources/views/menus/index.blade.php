@@ -1,184 +1,103 @@
-{{-- @extends('layouts.main')
+@extends('layouts.main')
 
+@section('title', 'Menus')
 @section('content')
-    <section class="section">
-        <div class="section-header">
-            <h1>Manage {{ $title }}</h1>
-            <div class="section-header-breadcrumb">
-                <a href="{{ route('menus.create') }}" class="btn btn-primary">Add Menu</a>
-            </div>
+    <div class="container grid px-6 mx-auto">
+
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Menus
+            </h2>
+            <a href="{{ route('menus.create') }}"
+                class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                <span>Create</span>
+                <svg class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                        clip-rule="evenodd" fill-rule="evenodd"></path>
+                </svg>
+                
+            </a>
         </div>
 
-        <div class="section-body">
-            <div class="row">
-                <div class="col-12">
-                    <h2>Categories</h2>
-                    <ul class="list-inline mb-4">
-                        <li class="list-inline-item">
-                            <a href="{{ route('menus.index') }}">All Post</a>
-                        </li>
-                        @foreach ($categories as $category)
-                            <li class="list-inline-item">
-                                <a
-                                    href="{{ route('menus.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+        <div class="w-full overflow-hidden rounded-lg shadow-xs mb-5">
+            <div class="p-2">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Page {{ $menus->currentPage() }} of {{ $menus->lastPage() }}
+                </p>
+            </div>
+            <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">No</th>
+                            <th class="px-4 py-3">Name</th>
+                            <th class="px-4 py-3">Price</th>
+                            <th class="px-4 py-3">Description</th>
+                            <th class="px-4 py-3">Image</th>
+                            <th class="px-4 py-3">Category</th>
+                            <th class="px-4 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        @foreach ($menus as $menu)
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3">
+                                    {{ $loop->iteration }} .
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="font-semibold text-sm">{{ $menu->name }}</p>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="text-sm">Rp. {{ number_format($menu->price, 0, null, '.') }}</p>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="text-sm">{{ Str::limit($menu->description, 50) }}</p>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <img src="{{ asset('storage/'.$menu->image) }}" alt="{{ $menu->name }}" class="w-16 h-16 object-cover">
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="text-sm">{{ $menu->category->name }}</p>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <a href="{{ route('menus.edit', $menu->id) }}"
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Edit">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                <path
+                                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                                </path>
+                                            </svg>
+                                        </a>
 
-                @if ($menus->count())
-                    @foreach ($menus as $menu)
-                        <div class="col-12 col-md-4 col-lg-4">
-                            <article class="article article-style-c">
-                                <div class="article-header">
-                                    <div class="article-image" data-background="{{ asset('storage/' . $menu->image) }}">
-                                        <div class="dropdown d-flex justify-content-end"
-                                            style="z-index: 100; position: absolute">
-                                            <button class="btn btn-primary dropdown-toggle" type="button"
-                                                id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                                Action
+                                        <form action="{{ route('menus.destroy', $menu->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                aria-label="Delete">
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                    viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd"
+                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                        clip-rule="evenodd"></path>
+                                                </svg>
                                             </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item has-icon text-warning"
-                                                    href="{{ route('menus.edit', $menu->id) }}">
-                                                    <i class="fas fa-pen"></i> Edit</a>
-
-                                                <a class="dropdown-item has-icon text-danger delete-button"
-                                                    data-id="{{ $menu->id }}">
-                                                    <i class="fas fa-trash"></i> Delete
-                                                </a>
-
-                                                <form id="delete-form-{{ $menu->id }}"
-                                                    action="{{ route('menus.destroy', $menu->id) }}" method="POST"
-                                                    class="d-none">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-                                            </div>
-                                        </div>
+                                        </form>
                                     </div>
-                                </div>
-
-                                <div class="article-details">
-                                    <div class="article-category">
-                                        <a href="{{ route('menus.index', ['category' => $menu->category->slug]) }}">
-                                            {{ $menu->category->name }}
-                                        </a>
-                                        <div class="bullet"></div>
-                                        <a href="#">
-                                            {{ $menu->created_at->diffForHumans() }}
-                                        </a>
-                                    </div>
-                                    <div class="article-title">
-                                        <h2><a href="#">{{ $menu->name }}</a></h2>
-                                    </div>
-                                    <p>Rp. {{ number_format($menu->price) }}</p>
-                                    <p>{{ $menu->excerpt }}</p>
-
-                                </div>
-                            </article>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="col-12">
-                        <h2 class="text-center">No Menu Found.</h2>
-                    </div>
-                @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
+
         </div>
-
-        {{ $menus->links() }}
-
-    </section>
+        <div class="mt-4 mb-4">
+            {{ $menus->links() }}
+        </div>
+    </div>
 @endsection
-
-
-@section('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const deleteButtons = document.querySelectorAll('.delete-button');
-
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const id = button.getAttribute('data-id');
-                    const form = document.getElementById(`delete-form-${id}`);
-
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            form.submit();
-                        }
-                    })
-                });
-            });
-        });
-    </script>
-@endsection --}}
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Index Menus</title>
-</head>
-
-<body>
-    <h3>Data Menu</h3>
-    <a href="{{ route('menus.create') }}" class="btn btn-primary"><button>Add Menu</button></a>
-
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Kategori</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($menus as $menu)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $menu->name }}</td>
-                    <td>{{ $menu->price }}</td>
-                    <td>{{ $menu->description }}</td>
-                    <td><img src="{{ asset('storage/' . $menu->image) }}" alt="unavailable" style="height: 50px"></td>
-                    <td>{{ $menu->category->name }}</td>
-                    <td>
-                        <a href="{{ route('menus.edit', $menu->id) }}"><button>Edit</button></a>
-
-                        <form id="delete-form-{{ $menu->id }}" action="{{ route('menus.destroy', $menu->id) }}"
-                            method="POST" class="d-none">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Delete</button>
-                        </form>
-
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td>Tidak ada data!</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</body>
-
-</html>

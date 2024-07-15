@@ -8,7 +8,6 @@ use App\Models\OrderDetail;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use App\Models\Payment;
 
 class OrderController extends Controller
 {
@@ -26,8 +25,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $menus = Menu::all();
-        return view('orders.create', compact('menus'));
+        return view('orders.create');
     }
 
     /**
