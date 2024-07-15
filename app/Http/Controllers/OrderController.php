@@ -25,7 +25,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        $menus = Menu::all();
+
+        return view('orders.create', compact('menus'));
     }
 
     /**

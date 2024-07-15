@@ -1,10 +1,43 @@
-
 @extends('layouts.main')
 @section('content')
     <style>
         #modal {
             width: 600px;
             max-width: 100%;
+        }
+
+        img[name="menu_img"] {
+            max-width: 64px;
+            max-height: 64px;
+            object-fit: cover;
+        }
+
+        .menu-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+        }
+
+        .menu-card-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-card-info {
+            margin-left: 12px;
+        }
+
+        .menu-card-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-card-actions button {
+            margin-left: 8px;
         }
     </style>
 
@@ -17,11 +50,36 @@
                 <div>
                     <button @click="openModal"
                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                        Open Modal
+                        List Menu
                     </button>
                 </div>
             </div>
         </main>
+
+        <div id="listMenu"></div>
+
+        <template id="menu-template">
+            <div class="form-group" data-menu-id="">
+                <div class="menu-card">
+                    <div class="menu-card-content">
+                        <img src="" name="menu_img" alt="Menu Image" class="w-16 h-16 object-cover rounded-full">
+                        <div class="menu-card-info">
+                            <p class="font-semibold text-sm menu-name-value"></p>
+                            <p class="text-sm text-gray-600">Rp. <span class="menu-price"></span></p>
+                        </div>
+                    </div>
+                    <div class="menu-card-actions">
+                        <input type="hidden" name="menu_id">
+                        <input class="block w-16 text-sm focus:outline-none form-input quantity-input"
+                            placeholder="Quantity" name="jumlah" value="1">
+                        <button
+                            class="remove-menu-item px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
 
         <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
@@ -37,15 +95,14 @@
                 role="dialog" id="modal">
                 <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
                 <header class="flex justify-end">
-                    <button
-                        class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover:text-gray-700"
+                    <a class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover:text-gray-700"
                         aria-label="close" @click="closeModal">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
                             <path
                                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 1 011.414 1.414L11.414 10l4.293 4.293a1 1 1 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 1 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                 clip-rule="evenodd" fill-rule="evenodd"></path>
                         </svg>
-                    </button>
+                    </a>
                 </header>
                 <!-- Modal body -->
                 <div class="mb-6 max-h-80 overflow-y-auto">
@@ -69,10 +126,13 @@
                                         {{ number_format($menu->price, 0, null, '.') }}</p>
                                 </div>
                             </div>
+
                             <!-- Order button -->
-                            <div>
+                            <div data-menu-id="{{ $menu->id }}" data-menu-name="{{ $menu->name }}"
+                                data-menu-img="{{ $menu->image }}" data-menu-price="{{ $menu->price }}">
+
                                 <button
-                                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                    class="add-menu-item px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                     Order
                                 </button>
                             </div>
@@ -80,6 +140,13 @@
                     @endforeach
                 </div>
             </div>
+        </div>
+
+        <div class="flex justify-end mt-4">
+            <button
+                class="submit-order flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                <span>Submit Order</span>
+            </button>
         </div>
     </div>
 
@@ -90,13 +157,15 @@
         document.querySelectorAll('.add-menu-item').forEach(link => {
             link.addEventListener('click', function(event) {
                 event.preventDefault();
-                let row = event.target.closest('tr');
+                let row = event.target.closest('div');
                 let menu_id = row.getAttribute('data-menu-id');
-                let jumlah = 1; // Sesuaikan dengan cara Anda mendapatkan jumlah
+                let menu_img = row.getAttribute('data-menu-img');
+                let menu_name = row.getAttribute('data-menu-name');
+                let menu_price = parseFloat(row.getAttribute('data-menu-price'));
 
                 let existingItem = document.querySelector(`.form-group[data-menu-id="${menu_id}"]`);
                 if (existingItem) {
-                    alert('item sudah ada pada list!')
+                    alert('Item sudah ada pada list!')
                     return;
                 }
 
@@ -105,9 +174,14 @@
 
                 clone.querySelector('.form-group').dataset.menuId = menu_id;
                 clone.querySelector('[name="menu_id"]').value = menu_id;
-                clone.querySelector('[name="jumlah"]').value = jumlah;
+                clone.querySelector('.menu-name-value').innerText = menu_name;
+                clone.querySelector('.menu-price').innerText = menu_price.toLocaleString('id-ID', {
+                    currency: 'IDR'
+                });
+
                 clone.querySelector('[name="menu_id"]').name = `dataMenuOrders[${index}][menu_id]`;
                 clone.querySelector('[name="jumlah"]').name = `dataMenuOrders[${index}][jumlah]`;
+                clone.querySelector('[name="menu_img"]').src = '{{ asset('storage/') }}/' + menu_img;
 
                 document.getElementById('listMenu').appendChild(clone);
 
@@ -115,9 +189,29 @@
             });
         });
 
+         document.querySelector('.submit-order').addEventListener('click', function(event) {
+            let totalOrderPrice = 0;
+            document.querySelectorAll('.form-group').forEach(row => {
+                let price = parseFloat(row.querySelector('.menu-price').innerText.replace(/\D/g, ''));
+                let quantity = parseInt(row.querySelector('.quantity-input').value);
+                totalOrderPrice += price * quantity;
+            });
+
+            alert(`Total Order Price: Rp. ${totalOrderPrice.toLocaleString('id-ID')}`);
+        });
+
+        document.querySelectorAll('.remove-menu-item').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                let row = event.target.closest('.form-group');
+                row.remove();
+                index--;
+            });
+        });
+
+        // Initialize select2
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
         });
     </script>
 @endsection
->>>>>>> origin/styling
