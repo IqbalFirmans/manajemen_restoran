@@ -21,10 +21,6 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'status' => ['required', 'string'],
-            'total_payment' => ['numeric'],
-            'payment_id' => ['numeric']
-        ];
+        return [];
     }
 }
