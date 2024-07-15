@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Menu;
 
 class OrderController extends Controller
 {
@@ -21,7 +22,11 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+
+        $menus = Menu::all();
+
+
+        return view('orders.create', compact('menus'));
     }
 
     /**
