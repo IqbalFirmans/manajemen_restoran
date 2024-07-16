@@ -99,7 +99,7 @@
                         aria-label="close" @click="closeModal">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
                             <path
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 1 011.414 1.414L11.414 10l4.293 4.293a1 1 1 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 1 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 1 011.414 1.414L11.414 10l4.293 4.293a1 1 1 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 1 01-1.414 1.414L8.586 10 4.293 5.707a1 1 1 010-1.414z"
                                 clip-rule="evenodd" fill-rule="evenodd"></path>
                         </svg>
                     </a>
@@ -142,8 +142,12 @@
             </div>
         </div>
 
+        <div id="orderInfoText" class="text-gray-500 text-center mt-6" style="display: none;">
+            There is no menu to order yet.
+        </div>
+
         <div class="flex justify-end mt-4">
-            <button
+            <button id="submitOrderButton" style="display: none;"
                 class="submit-order flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 <span>Submit Order</span>
             </button>
@@ -152,66 +156,126 @@
 
     <script>
         let index = 0;
-        let addedMenuIds = {};
 
-        document.querySelectorAll('.add-menu-item').forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                let row = event.target.closest('div');
-                let menu_id = row.getAttribute('data-menu-id');
-                let menu_img = row.getAttribute('data-menu-img');
-                let menu_name = row.getAttribute('data-menu-name');
-                let menu_price = parseFloat(row.getAttribute('data-menu-price'));
+        function saveOrderToLocalStorage() {
+            const orderData = [];
+            document.querySelectorAll('.form-group').forEach(row => {
+                const menuId = row.dataset.menuId;
+                const menuName = row.querySelector('.menu-name-value').innerText;
+                const menuPrice = parseFloat(row.querySelector('.menu-price').innerText.replace(/\D/g, ''));
+                const menuImg = row.querySelector('[name="menu_img"]').src;
+                const quantity = row.querySelector('.quantity-input').value;
 
-                let existingItem = document.querySelector(`.form-group[data-menu-id="${menu_id}"]`);
-                if (existingItem) {
-                    alert('Item sudah ada pada list!')
-                    return;
-                }
+                orderData.push({ menuId, menuName, menuPrice, menuImg, quantity });
+            });
 
-                const template = document.querySelector('#menu-template');
-                const clone = template.content.cloneNode(true);
+            localStorage.setItem('orderData', JSON.stringify(orderData));
+            console.log('Order saved to local storage:', orderData);
+        }
 
-                clone.querySelector('.form-group').dataset.menuId = menu_id;
-                clone.querySelector('[name="menu_id"]').value = menu_id;
-                clone.querySelector('.menu-name-value').innerText = menu_name;
-                clone.querySelector('.menu-price').innerText = menu_price.toLocaleString('id-ID', {
-                    currency: 'IDR'
+        function loadOrderFromLocalStorage() {
+            const orderData = JSON.parse(localStorage.getItem('orderData'));
+
+            if (orderData && orderData.length > 0) {
+                console.log('Order loaded from local storage:', orderData);
+                orderData.forEach((item, idx) => {
+                    const template = document.querySelector('#menu-template');
+                    const clone = template.content.cloneNode(true);
+
+                    clone.querySelector('.form-group').dataset.menuId = item.menuId;
+                    clone.querySelector('[name="menu_id"]').value = item.menuId;
+                    clone.querySelector('.menu-name-value').innerText = item.menuName;
+                    clone.querySelector('.menu-price').innerText = item.menuPrice.toLocaleString('id-ID', {
+                        currency: 'IDR'
+                    });
+                    clone.querySelector('.quantity-input').value = item.quantity;
+                    clone.querySelector('[name="menu_img"]').src = item.menuImg;
+
+                    clone.querySelector('[name="menu_id"]').name = `dataMenuOrders[${idx}][menu_id]`;
+                    clone.querySelector('[name="jumlah"]').name = `dataMenuOrders[${idx}][jumlah]`;
+
+                    document.getElementById('listMenu').appendChild(clone);
                 });
 
-                clone.querySelector('[name="menu_id"]').name = `dataMenuOrders[${index}][menu_id]`;
-                clone.querySelector('[name="jumlah"]').name = `dataMenuOrders[${index}][jumlah]`;
-                clone.querySelector('[name="menu_img"]').src = '{{ asset('storage/') }}/' + menu_img;
+                index = orderData.length;
 
-                document.getElementById('listMenu').appendChild(clone);
+                toggleOrderInfoText();
+            } else {
+                console.log('No order data found in local storage');
+            }
+        }
 
-                index++;
+        document.addEventListener('DOMContentLoaded', function() {
+
+            loadOrderFromLocalStorage();
+
+
+            document.querySelectorAll('.add-menu-item').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    let row = event.target.closest('div');
+                    let menu_id = row.getAttribute('data-menu-id');
+                    let menu_img = row.getAttribute('data-menu-img');
+                    let menu_name = row.getAttribute('data-menu-name');
+                    let menu_price = parseFloat(row.getAttribute('data-menu-price'));
+
+                    let existingItem = document.querySelector(`.form-group[data-menu-id="${menu_id}"]`);
+                    if (existingItem) {
+                        alert('Item sudah ada pada list!');
+                        return;
+                    }
+
+                    const template = document.querySelector('#menu-template');
+                    const clone = template.content.cloneNode(true);
+
+                    clone.querySelector('.form-group').dataset.menuId = menu_id;
+                    clone.querySelector('[name="menu_id"]').value = menu_id;
+                    clone.querySelector('.menu-name-value').innerText = menu_name;
+                    clone.querySelector('.menu-price').innerText = menu_price.toLocaleString('id-ID', {
+                        currency: 'IDR'
+                    });
+                    clone.querySelector('.quantity-input').value = 1;
+                    clone.querySelector('[name="menu_img"]').src = '{{ asset('storage/') }}/' + menu_img;
+
+                    clone.querySelector('[name="menu_id"]').name = `dataMenuOrders[${index}][menu_id]`;
+                    clone.querySelector('[name="jumlah"]').name = `dataMenuOrders[${index}][jumlah]`;
+
+                    document.getElementById('listMenu').appendChild(clone);
+                    index++;
+
+                    saveOrderToLocalStorage();
+                    toggleOrderInfoText();
+                });
             });
-        });
 
-         document.querySelector('.submit-order').addEventListener('click', function(event) {
-            let totalOrderPrice = 0;
-            document.querySelectorAll('.form-group').forEach(row => {
-                let price = parseFloat(row.querySelector('.menu-price').innerText.replace(/\D/g, ''));
-                let quantity = parseInt(row.querySelector('.quantity-input').value);
-                totalOrderPrice += price * quantity;
+            document.addEventListener('click', function(event) {
+                if (event.target.matches('.remove-menu-item')) {
+                    event.preventDefault();
+                    let row = event.target.closest('.form-group');
+                    row.remove();
+                    index--;
+
+                    saveOrderToLocalStorage();
+                    toggleOrderInfoText();
+                }
             });
 
-            alert(`Total Order Price: Rp. ${totalOrderPrice.toLocaleString('id-ID')}`);
+
+            toggleOrderInfoText();
         });
 
-        document.querySelectorAll('.remove-menu-item').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                let row = event.target.closest('.form-group');
-                row.remove();
-                index--;
-            });
-        });
+        function toggleOrderInfoText() {
+            const orderInfoText = document.getElementById('orderInfoText');
+            const submitOrderButton = document.getElementById('submitOrderButton');
+            const listMenu = document.getElementById('listMenu');
 
-        // Initialize select2
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2();
-        });
+            if (listMenu.children.length === 0) {
+                orderInfoText.style.display = 'block';
+                submitOrderButton.style.display = 'none';
+            } else {
+                orderInfoText.style.display = 'none';
+                submitOrderButton.style.display = 'block';
+            }
+        }
     </script>
 @endsection

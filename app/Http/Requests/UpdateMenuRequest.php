@@ -23,7 +23,7 @@ class UpdateMenuRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:1',
             'description' => 'required|max:3000',
             'image' => ['file', 'mimes:png,jpg,jpeg,webp', 'max:3048', $this->method() == "PUT" ? 'nullable' : 'required'],
             'category_id' => 'required|numeric'
