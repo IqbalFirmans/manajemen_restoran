@@ -13,12 +13,12 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::latest()->filter(request(['search']))->paginate(10)->withQueryString();
+
         return view('customers.index', compact('customers'));
 
-        
-    }
 
+    }
     /**
      * Show the form for creating a new resource.
      */

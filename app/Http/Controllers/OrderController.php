@@ -113,6 +113,12 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        try {
+            $order->delete();
+
+            return redirect()->route('orders.index')->with('success', 'Delete Order Success!');
+        } catch (\Throwable $e) {
+            return redirect()->route('orders.index')->with('error', 'Failed Delete : ' . $e->getMessage());
+        }
     }
 }

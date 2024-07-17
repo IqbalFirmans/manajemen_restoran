@@ -4,6 +4,25 @@
 @section('content')
     <div class="container grid px-6 mx-auto">
 
+        <div class="flex justify-center mt-4 flex-1 lg:mr-32">
+            <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+                <div class="absolute inset-y-0 flex items-center pl-2">
+                    <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <form action="{{ route('tables.index') }}" method="get">
+
+                    <input
+                        class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                        type="search" name="search" value="{{ request('search') }}" autocomplete="off"
+                        placeholder="Search for Tables" autofocus aria-label="Search" />
+                </form>
+            </div>
+        </div>
+
         <div class="flex justify-between items-center mb-4">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 Tables
@@ -32,16 +51,16 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                        @foreach ($tables as $table)
+                        @forelse ($tables as $table)
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
                                     {{ $table->table_number }}
                                 </td>
                                 <td class="px-4 py-3">
                                     <p class="font-semibold text-sm ">
-                                        <span class="px-2 py-1 font-semibold leading-tight
-                                            @if ($table->status == 'available')
-                                            text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100
+                                        <span
+                                            class="px-2 py-1 font-semibold leading-tight
+                                            @if ($table->status == 'available') text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100
 
                                             @elseif($table->status == 'occupied')
                                              text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700
@@ -85,10 +104,19 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="px-4 py-3 text-center text-gray-500">
+                                    Tables Not found.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="mt-4 mb-4">
+            {{ $tables->links() }}
         </div>
     </div>
 @endsection

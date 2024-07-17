@@ -39,10 +39,10 @@
                                     {{ $loop->iteration }} .
                                 </td>
                                 <td class="px-4 py-3">
-                                    <p class="font-semibold text-sm">{{ $order->customer->name }}</p>
+                                    <p class="font-semibold text-sm">{{ $order->customer_id }}</p>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ $order->payment->method->name }}
+                                    {{ $order->payment_id }}
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">

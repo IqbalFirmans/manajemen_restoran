@@ -17,7 +17,10 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::with('category')->latest()->paginate(5);
+        // $menus = Menu::with('category')->latest()->paginate(5);
+
+        $menus = Menu::latest()->filter(request(['search']))->paginate(5)->withQueryString();
+        
         return view('menus.index', compact('menus'));
     }
 
