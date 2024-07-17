@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained('orders');
-            $table->foreignId('method_id')->constrained('payment_methods');
+            $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('method_id')->constrained('payment_methods')->onUpdate('cascade')->onDelete('restrict');
             $table->decimal('total_bayar', 10, 2);
             $table->timestamps();
         });

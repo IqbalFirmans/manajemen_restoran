@@ -22,6 +22,6 @@ class Payment extends Model
 
     function method()
     {
-        return $this->belongsTo(PaymentMethod::class);
+        return $this->belongsTo(PaymentMethod::class, 'method_id');
     }
 }
