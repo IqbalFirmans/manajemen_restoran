@@ -25,7 +25,7 @@ class UpdatePaymentMethodRequest extends FormRequest
         return [
             'name' => ['required', 'string', Rule::unique('payment_methods', 'name')->ignore($this->payment_method->id)],
             'description' => ['nullable', 'string'],
-            'status' => ['required', 'boolean']
+            'status' => ['required', 'in:active,nonactive']
         ];
     }
 

@@ -1,43 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Payment Method</title>
-</head>
-<body>
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <ul>
-                <li>{{ $error }}</li>
-            </ul>
-        @endforeach
-    @endif
+@extends('layouts.main')
 
-    <h3>Edit Metode Pembayaran</h3>
-    <form action="{{ route('payment_methods.update', $paymentMethod->id) }}" method="post">
-        @csrf
-        @method('put')
-        
-        <div>
-            <label for="name">Jenis Pembayaran : </label>
-            <input type="text" name="name" value="{{ $paymentMethod->name }}">
+@section('title', 'Edit Payment Method')
+@section('content')
+
+    <section class="mt-4">
+        <div class="container grid px-6 mx-auto">
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+                    Edit Payment Methods
+                </h4>
+
+                <form action="{{ route('payment_methods.update', $paymentMethod) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Type of Payment
+                        </span>
+                        <input
+                            class="block w-full mt-2 text-sm focus:outline-none form-input @error('name') border-red-600 @enderror"
+                            placeholder="Name" name="name" value="{{ $paymentMethod->name }}" />
+
+                        @error('name')
+                            <span class="text-xs text-red-600 dark:text-red-400">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </label>
+
+                    <label class="mt-4 block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Description
+                        </span>
+                        <input
+                            class="block w-full mt-2 text-sm focus:outline-none form-input @error('description') border-red-600 @enderror"
+                            placeholder="Description" name="description" value="{{ $paymentMethod->description }}" />
+
+                        @error('description')
+                            <span class="text-xs text-red-600 dark:text-red-400">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </label>
+
+                    <div class="mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">
+                            Status
+                        </span>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                                <input type="radio"
+                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                    name="status" value="active"
+                                    {{ $paymentMethod->status == 'active' ? 'checked' : '' }} />
+                                <span class="ml-2">Active</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                <input type="radio"
+                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                    name="status" value="nonactive"
+                                    {{ $paymentMethod->status == 'nonactive' ? 'checked' : '' }} />
+                                <span class="ml-2">Nonactive</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end items-center mb-2 mt-2 space-x-3">
+                        <a href="/payment_methods"
+                            class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+                            <span>Back</span>
+                        </a>
+                        <button type="submit"
+                            class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            <span>Update</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div>
-            <label for="description">Deskripsi : </label>
-            <label>optional</label>
-            <input type="text" name="description" value="{{ $paymentMethod->description }}">
-        </div>
-        <div>
-            <label for="status">Status : </label>
-            <input type="radio" id="status_active" name="status" value="1" {{ $paymentMethod->status ? 'checked' : '' }}>
-            <label for="status_active">Aktif</label><br>
-            <input type="radio" id="status_inactive" name="status" value="0" {{ !$paymentMethod->status ? 'checked' : '' }}>
-            <label for="status_inactive">Tidak Aktif</label><br>
-        </div>
-        <a href="{{ route('payment_methods.index') }}">Kembali</a>
-        <button type="submit">Simpan</button>
-    </form>
-</body>
-</html>
+    </section>
+
+@endsection

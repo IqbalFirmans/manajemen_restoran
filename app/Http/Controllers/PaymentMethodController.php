@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PaymentMethod;
 use App\Http\Requests\StorePaymentMethodRequest;
 use App\Http\Requests\UpdatePaymentMethodRequest;
+use Illuminate\Support\Str;
 
 class PaymentMethodController extends Controller
 {
@@ -13,7 +14,8 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        $payment_methods = PaymentMethod::all();
+        $payment_methods = PaymentMethod::filter(request(['search']))->paginate(10);
+
         return view('payment_methods.index', compact('payment_methods'));
     }
 

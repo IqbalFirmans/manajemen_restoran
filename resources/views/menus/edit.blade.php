@@ -3,26 +3,27 @@
 @section('title', 'Edit Menu')
 @section('content')
 
-    <section class="mt-4">
-        <div class="container grid px-6 mx-auto">
-            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                    Edit Menu
-                </h4>
+<section class="mt-4">
+    <div class="container grid px-6 mx-auto">
+        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+                Edit Menu
+            </h4>
 
-                <form action="{{ route('menus.update', $menu->id) }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method('put')
+            <form action="{{ route('menus.update', $menu->id) }}" method="post" enctype="multipart/form-data">
+                @csrf
+                @method('put')
 
-                    <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                    <input type="hidden" value="{{ $menu->image }}" name="oldImage">
 
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
                                 Menu Name
                             </span>
                             <input
-                                class="block w-full mt-2 text-sm focus:outline-none form-input @error('name') border-red-600 @enderror"
-                                placeholder="Name" name="name" value="{{ $menu->name }}" />
+                            class="block w-full mt-2 text-sm focus:outline-none form-input @error('name') border-red-600 @enderror"
+                            placeholder="Name" name="name" value="{{ $menu->name }}" />
 
                             @error('name')
                                 <span class="text-xs text-red-600 dark:text-red-400">
