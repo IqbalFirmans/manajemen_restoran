@@ -14,4 +14,14 @@ class Payment extends Model
         'method_id',
         'total_bayar',
     ];
+
+    function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    function method()
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
 }

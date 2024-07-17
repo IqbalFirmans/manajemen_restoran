@@ -14,4 +14,9 @@ class PaymentMethod extends Model
         'description',
         'status'
     ];
+
+    function payment()
+    {
+        $this->hasOne(Payment::class);
+    }
 }

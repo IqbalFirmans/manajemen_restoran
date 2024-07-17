@@ -12,8 +12,6 @@ class Order extends Model
     protected $fillable = [
         'customer_id',
         'status',
-        'total_payment',
-        'payment_id',
     ];
 
     function customer()
@@ -23,6 +21,6 @@ class Order extends Model
 
     function payment()
     {
-        return $this->belongsTo(Customer::class, 'payment_id');
+        return $this->hasOne(Payment::class);
     }
 }
