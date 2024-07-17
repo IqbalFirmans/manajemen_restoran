@@ -83,6 +83,8 @@ class OrderController extends Controller
         ];
 
         Payment::create($payment_data);
+
+        return redirect()->route('orders.index')->with('success', 'Order success!');
     }
 
     /**
@@ -90,6 +92,10 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $orders = OrderDetail::where('order_id', $order->id)->get();
+        $payment = Payment::where('order_id', $order->id)->first();
+
+        return view('orders.show', compact('orders', 'payment'));
     }
 
     /**
@@ -100,7 +106,7 @@ class OrderController extends Controller
         //
     }
 
-    /**
+    /** 
      * Update the specified resource in storage.
      */
     public function update(UpdateOrderRequest $request, Order $order)
