@@ -64,8 +64,15 @@ class PaymentMethodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PaymentMethod $paymentMethod)
+    public function destroy($id)
     {
+
+        $paymentMethod = PaymentMethod::with('payment')->findOrFail($id);
+
+        if ($paymentMethod->payment()->exists()) {
+            return redirect()->route('payment_methods.index')->with('error', 'Cannot delete Payment Method with associated Payment.');
+        }
+
         $paymentMethod->delete();
         return redirect(route('payment_methods.index'))->with('success', 'Data metode pembayaran berhasil dihapus.');
     }

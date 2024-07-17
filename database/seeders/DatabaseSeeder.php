@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Category::create([
-            'name' => 'makanan'
+            'name' => 'Food'
         ]);
 
         Customer::create([
@@ -43,9 +43,9 @@ class DatabaseSeeder extends Seeder
 
 
         Menu::create([
-            'name' => 'apel',
-            'price' => '10000',
-            'description' => 'ini apel.',
+            'name' => 'Fried Chicken',
+            'price' => '20000',
+            'description' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
             'image' => 'C9T9OXZ5mgmtOBq1oxivF90slIFNZXA0hyNSqcDB',
             'category_id' => '1'
         ]);

@@ -10,13 +10,11 @@
                     Edit Category
                 </h4>
 
+                <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
                 <form action="{{ route('categories.update', $category->id) }}" method="post">
                     @csrf
                     @method('PUT')
                     <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">
-                            Category Name
-                        </span>
                         <input
                             class="block w-full mt-2 text-sm focus:outline-none form-input @error('name') border-red-600 @enderror"
                             placeholder="Name" name="name" value="{{ $category->name }}" />
@@ -39,6 +37,7 @@
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
     </section>

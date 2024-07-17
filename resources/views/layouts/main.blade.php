@@ -18,10 +18,7 @@
 
     <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
 
-<<<<<<< HEAD
-=======
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
->>>>>>> 14d59303f47e51a11b2aeb9d6ec7a21ad5d41fdc
     {{-- jQuery --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -336,6 +333,30 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById(`delete-form-${id}`).submit();
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function deleteMenu(menuId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#9333ea",
+                cancelButtonColor: "#9333ae",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    const orderData = JSON.parse(localStorage.getItem('orderData')) || [];
+                    const updatedOrderData = orderData.filter(item => item.menuId != menuId);
+                    localStorage.setItem('orderData', JSON.stringify(updatedOrderData));
+                    console.log('Updated order data after deletion:', updatedOrderData);
+
+                    document.getElementById(`delete-form-${menuId}`).submit();
                 }
             });
         }

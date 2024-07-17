@@ -104,7 +104,10 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         try {
-            
+            if ($menu->details()->exists()) {
+                return redirect()->route('menus.index')->with('error', 'Cannot delete Menu with associated Details.');
+            }
+
             if ($menu->image) {
                 Storage::disk('public')->delete($menu->image);
             }

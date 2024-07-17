@@ -27,6 +27,6 @@ class PaymentMethod extends Model
 
     function payment()
     {
-        $this->hasOne(Payment::class);
+        return $this->hasOne(Payment::class, 'method_id');
     }
 }

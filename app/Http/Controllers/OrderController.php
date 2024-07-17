@@ -106,7 +106,7 @@ class OrderController extends Controller
         //
     }
 
-    /** 
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateOrderRequest $request, Order $order)
@@ -125,6 +125,7 @@ class OrderController extends Controller
             return redirect()->route('orders.index')->with('success', 'Delete Order Success!');
         } catch (\Throwable $e) {
             return redirect()->route('orders.index')->with('error', 'Failed Delete : ' . $e->getMessage());
+
         }
     }
 }

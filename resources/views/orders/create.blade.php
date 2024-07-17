@@ -60,7 +60,7 @@
                 <div class="grid gap-6 ml-2 mb-8 md:grid-cols-2 lg:grid-cols-3">
                     <label class="block text-sm">
                         <select
-                            class="js-example-basic-single block w-full mt-2 text-sm focus:outline-none form-select @error('customer_id') border-red-600 @enderror"
+                            class="js-example-basic-single block w-full mt-2 text-sm focus:outline-none @error('customer_id') border-red-600 @enderror "
                             name="customer_id">
                             @foreach ($customers as $customer)
                                 <option value="{{ $customer->id }}"
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                             <div class="menu-card-actions">
-                                <input type="text" name="menu_id" value="[]">
+                                <input type="hidden" name="menu_id" value="[]">
                                 <input class="block w-16 text-sm focus:outline-none form-input quantity-input"
                                     placeholder="Quantity" name="jumlah" value="1">
                                 <button
@@ -159,7 +159,7 @@
                         Menu List
                     </p>
                     <!-- Modal description -->
-                    @foreach ($menus as $menu)
+                    @forelse ($menus as $menu)
                         <div
                             class="flex justify-between items-center max-w-xs mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800 mb-4">
                             <!-- Menu content -->
@@ -185,7 +185,11 @@
                                 </button>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                    <p class="mb-2 text-lg text-center text-gray-600 font-bold dark:text-gray-300">
+                        Menu Not Found
+                    </p>
+                    @endforelse
                 </div>
             </div>
         </div>
