@@ -13,7 +13,7 @@ class TableController extends Controller
      */
     public function index()
     {
-        $tables = Table::all();
+        $tables = Table::filter(request(['search']))->paginate(10);
 
         return view('tables.index', compact('tables'));
     }
@@ -23,7 +23,7 @@ class TableController extends Controller
      */
     public function create()
     {
-        
+
         return view('tables.create');
     }
 
