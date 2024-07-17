@@ -92,10 +92,27 @@
                                                 </svg>
                                             </button>
                                         </form>
+
+                                        <button onclick="confirmDelete('{{ $customer->id }}')"
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Delete">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M6 2a1 1 0 011-1h6a1 1 0 011 1v1h3a1 1 0 011 1v1a1 1 0 01-1 1v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5a1 1 0 01-1-1V3a1 1 0 011-1h3V2zm1 2v10a1 1 0 001 1h6a1 1 0 001-1V4H7z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+
+                                        <form id="delete-form-{{ $customer->id }}"
+                                            action="{{ route('customers.destroy', $customer->id) }}" method="post"
+                                            style="display: none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
-                            @empty
+                        @empty
                             <tr>
                                 <td colspan="7" class="px-4 py-3 text-center text-gray-500">
                                     Customers Not found.
