@@ -54,7 +54,32 @@
                     </button>
                 </div>
             </div>
+
+            <form action="{{ route('orders.store') }}" method="post">
+                @csrf
+                <div class="grid gap-6 ml-2 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                    <label class="block text-sm">
+                        <select
+                            class="js-example-basic-single block w-full mt-2 text-sm focus:outline-none form-select @error('customer_id') border-red-600 @enderror"
+                            name="customer_id">
+                            @foreach ($customers as $customer)
+                                <option value="{{ $customer->id }}"
+                                    {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                    {{ $customer->name }}</option>
+                            @endforeach
+
+                        </select>
+
+                        @error('customer_id')
+                            <span class="text-xs text-red-600 dark:text-red-400">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </label>
+                </div>
         </main>
+
+
 
         <div id="listMenu"></div>
 
@@ -69,7 +94,7 @@
                         </div>
                     </div>
                     <div class="menu-card-actions">
-                        <input type="hidden" name="menu_id">
+                        <input type="text" name="menu_id" value="[]">
                         <input class="block w-16 text-sm focus:outline-none form-input quantity-input"
                             placeholder="Quantity" name="jumlah" value="1">
                         <button
@@ -80,6 +105,13 @@
                 </div>
             </div>
         </template>
+        <div class="flex justify-end mt-4">
+            <button type="submit" id="submitOrderButton" style="display: none;"
+                class="submit-order flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                <span>Submit Order</span>
+            </button>
+        </div>
+        </form>
 
         <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
@@ -146,12 +178,7 @@
             There is no menu to order yet.
         </div>
 
-        <div class="flex justify-end mt-4">
-            <button id="submitOrderButton" style="display: none;"
-                class="submit-order flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                <span>Submit Order</span>
-            </button>
-        </div>
+
     </div>
 
     <script>
@@ -166,7 +193,13 @@
                 const menuImg = row.querySelector('[name="menu_img"]').src;
                 const quantity = row.querySelector('.quantity-input').value;
 
-                orderData.push({ menuId, menuName, menuPrice, menuImg, quantity });
+                orderData.push({
+                    menuId,
+                    menuName,
+                    menuPrice,
+                    menuImg,
+                    quantity
+                });
             });
 
             localStorage.setItem('orderData', JSON.stringify(orderData));
@@ -205,6 +238,7 @@
             }
         }
 
+
         document.addEventListener('DOMContentLoaded', function() {
 
             loadOrderFromLocalStorage();
@@ -219,7 +253,8 @@
                     let menu_name = row.getAttribute('data-menu-name');
                     let menu_price = parseFloat(row.getAttribute('data-menu-price'));
 
-                    let existingItem = document.querySelector(`.form-group[data-menu-id="${menu_id}"]`);
+                    let existingItem = document.querySelector(
+                        `.form-group[data-menu-id="${menu_id}"]`);
                     if (existingItem) {
                         alert('Item sudah ada pada list!');
                         return;
@@ -231,14 +266,18 @@
                     clone.querySelector('.form-group').dataset.menuId = menu_id;
                     clone.querySelector('[name="menu_id"]').value = menu_id;
                     clone.querySelector('.menu-name-value').innerText = menu_name;
-                    clone.querySelector('.menu-price').innerText = menu_price.toLocaleString('id-ID', {
-                        currency: 'IDR'
-                    });
+                    clone.querySelector('.menu-price').innerText = menu_price.toLocaleString(
+                        'id-ID', {
+                            currency: 'IDR'
+                        });
                     clone.querySelector('.quantity-input').value = 1;
-                    clone.querySelector('[name="menu_img"]').src = '{{ asset('storage/') }}/' + menu_img;
+                    clone.querySelector('[name="menu_img"]').src = '{{ asset('storage/') }}/' +
+                        menu_img;
 
-                    clone.querySelector('[name="menu_id"]').name = `dataMenuOrders[${index}][menu_id]`;
-                    clone.querySelector('[name="jumlah"]').name = `dataMenuOrders[${index}][jumlah]`;
+                    clone.querySelector('[name="menu_id"]').name =
+                        `dataMenuOrders[${index}][menu_id]`;
+                    clone.querySelector('[name="jumlah"]').name =
+                        `dataMenuOrders[${index}][jumlah]`;
 
                     document.getElementById('listMenu').appendChild(clone);
                     index++;
@@ -264,6 +303,8 @@
             toggleOrderInfoText();
         });
 
+
+
         function toggleOrderInfoText() {
             const orderInfoText = document.getElementById('orderInfoText');
             const submitOrderButton = document.getElementById('submitOrderButton');
@@ -277,5 +318,9 @@
                 submitOrderButton.style.display = 'block';
             }
         }
+
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
     </script>
 @endsection

@@ -8,6 +8,7 @@ use App\Models\OrderDetail;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Customer;
 
 class OrderController extends Controller
 {
@@ -26,8 +27,9 @@ class OrderController extends Controller
     public function create()
     {
         $menus = Menu::all();
+        $customers = Customer::all();
 
-        return view('orders.create', compact('menus'));
+        return view('orders.create', compact('menus', 'customers'));
     }
 
     /**
@@ -35,7 +37,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        // dd($request);
+        dd($request);
         // $now_time = Carbon::now()->format('Y-m-d H:i:s');
         $dataOrder = [
             'customer_id' => $request->customer_id,
