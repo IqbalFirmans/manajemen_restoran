@@ -6,6 +6,8 @@ use App\Models\Menu;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
+use App\Models\Customer;
+use App\Models\PaymentMethod;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,9 +26,21 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Category::create([
-            'name' => 'Makanan',
-            'slug' => 'makanan'
+            'name' => 'makanan'
         ]);
+
+        Customer::create([
+            'name' => 'John Smith',
+            'email' => 'john@gmail.com',
+            'phone' => '+818833222'
+        ]);
+
+        PaymentMethod::create([
+            'name' => 'Cash',
+            'description' => 'Cash Description',
+            'status' => 'active'
+        ]);
+
 
         Menu::create([
             'name' => 'apel',

@@ -20,7 +20,7 @@ class MenuController extends Controller
         // $menus = Menu::with('category')->latest()->paginate(5);
 
         $menus = Menu::latest()->filter(request(['search']))->paginate(5)->withQueryString();
-        
+
         return view('menus.index', compact('menus'));
     }
 
@@ -76,6 +76,7 @@ class MenuController extends Controller
     {
         $validateData = $request->validated();
 
+
         try {
             if ($request->hasFile('image')) {
 
@@ -103,7 +104,7 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         try {
-
+            
             if ($menu->image) {
                 Storage::disk('public')->delete($menu->image);
             }

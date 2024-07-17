@@ -18,6 +18,10 @@
 
     <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
 
+<<<<<<< HEAD
+=======
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+>>>>>>> 14d59303f47e51a11b2aeb9d6ec7a21ad5d41fdc
     {{-- jQuery --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -132,6 +136,27 @@
 
                     <li class="relative px-6 py-3">
 
+                        @if (Request::is('payment_methods'))
+                            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                                aria-hidden="true"></span>
+                        @endif
+
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('payment_methods') ? 'text-gray-800' : '' }} dark:text-gray-100"
+                            href="/payment_methods">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                            </svg>
+
+
+                            <span class="ml-4">Payment Methods</span>
+                        </a>
+                    </li>
+
+                    <li class="relative px-6 py-3">
+
                         @if (Request::is('orders'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
@@ -175,7 +200,7 @@
                                 clip-rule="evenodd"></path>
                         </svg>
                     </button>
-
+                    @yield('search')
                     <ul class="flex items-center flex-shrink-0 space-x-6">
                         <!-- Theme toggler -->
                         <li class="flex">
