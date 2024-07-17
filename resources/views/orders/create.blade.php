@@ -67,7 +67,6 @@
                                     {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
                                     {{ $customer->name }}</option>
                             @endforeach
-
                         </select>
 
                         @error('customer_id')
@@ -76,42 +75,63 @@
                             </span>
                         @enderror
                     </label>
+
+                    <label class="block text-sm">
+                        <select
+                            class="js-example-basic-single block w-full mt-2 text-sm focus:outline-none form-select @error('payment_id') border-red-600 @enderror"
+                            name="payment_id">
+                            @foreach ($payments as $payment)
+                                <option value="{{ $payment->id }}"
+                                    {{ old('payment_id') == $payment->id ? 'selected' : '' }}>
+                                    {{ $payment->name }}</option>
+                            @endforeach
+                        </select>
+
+                        @error('payment_id')
+                            <span class="text-xs text-red-600 dark:text-red-400">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </label>
                 </div>
+
+                <div id="listMenu"></div>
+
+                <template id="menu-template">
+                    <div class="form-group" data-menu-id="">
+                        <div class="menu-card">
+                            <div class="menu-card-content">
+                                <img src="" name="menu_img" alt="Menu Image"
+                                    class="w-16 h-16 object-cover rounded-full">
+                                <div class="menu-card-info">
+                                    <p class="font-semibold text-sm menu-name-value"></p>
+                                    <p class="text-sm text-gray-600">Rp. <span class="menu-price"></span></p>
+                                </div>
+                            </div>
+                            <div class="menu-card-actions">
+                                <input type="text" name="menu_id" value="[]">
+                                <input class="block w-16 text-sm focus:outline-none form-input quantity-input"
+                                    placeholder="Quantity" name="jumlah" value="1">
+                                <button
+                                    class="remove-menu-item px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="flex justify-end mt-4">
+                    <button type="submit" id="submitOrderButton" style="display: none;"
+                        class="submit-order flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        <span>Submit Order</span>
+                    </button>
+                </div>
+            </form>
         </main>
 
 
 
-        <div id="listMenu"></div>
 
-        <template id="menu-template">
-            <div class="form-group" data-menu-id="">
-                <div class="menu-card">
-                    <div class="menu-card-content">
-                        <img src="" name="menu_img" alt="Menu Image" class="w-16 h-16 object-cover rounded-full">
-                        <div class="menu-card-info">
-                            <p class="font-semibold text-sm menu-name-value"></p>
-                            <p class="text-sm text-gray-600">Rp. <span class="menu-price"></span></p>
-                        </div>
-                    </div>
-                    <div class="menu-card-actions">
-                        <input type="text" name="menu_id" value="[]">
-                        <input class="block w-16 text-sm focus:outline-none form-input quantity-input"
-                            placeholder="Quantity" name="jumlah" value="1">
-                        <button
-                            class="remove-menu-item px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
-                            Remove
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </template>
-        <div class="flex justify-end mt-4">
-            <button type="submit" id="submitOrderButton" style="display: none;"
-                class="submit-order flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                <span>Submit Order</span>
-            </button>
-        </div>
-        </form>
 
         <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"

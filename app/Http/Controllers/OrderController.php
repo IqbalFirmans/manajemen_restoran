@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Customer;
 use App\Models\OrderDetail;
+use App\Models\PaymentMethod;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use App\Models\Customer;
 
 class OrderController extends Controller
 {
@@ -28,8 +30,9 @@ class OrderController extends Controller
     {
         $menus = Menu::all();
         $customers = Customer::all();
+        $payments = PaymentMethod::all();
 
-        return view('orders.create', compact('menus', 'customers'));
+        return view('orders.create', compact('menus', 'customers', 'payments'));
     }
 
     /**
@@ -37,11 +40,9 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        dd($request);
-        // $now_time = Carbon::now()->format('Y-m-d H:i:s');
+        // dd($request);
         $dataOrder = [
             'customer_id' => $request->customer_id,
-            // 'order_time' => $now_time,
             'status' => 'pending'
         ];
 
@@ -49,12 +50,26 @@ class OrderController extends Controller
 
         $order = Order::latest('id')->first();
         $order_id = $order->id;
+        $total_bayar = 0;
 
         foreach ($request->dataMenuOrders as $dataMenuOrder) {
+            $menu_id = $dataMenuOrder['menu_id'];
+            $quantity = $dataMenuOrder['jumlah'];
+
+            // Ambil harga menu dari database
+            $menu = Menu::find($menu_id);
+            $price = $menu->price;
+
+            // Hitung total harga untuk item ini
+            $total_item_price = $price * $quantity;
+
+            // Tambahkan total harga item ke total bayar
+            $total_bayar += $total_item_price;
+
             $data = [
                 'order_id' => $order_id,
-                'menu_id' => $dataMenuOrder['menu_id'],
-                'quantity' => $dataMenuOrder['jumlah']
+                'menu_id' => $menu_id,
+                'quantity' => $quantity
             ];
 
             // dd($data);
@@ -62,10 +77,12 @@ class OrderController extends Controller
         }
 
         $payment_data = [
-            'payment_id' => $request->payment_id,
+            'order_id' => $order_id,
+            'method_id' => $request->payment_id,
+            'total_bayar' => $total_bayar,
         ];
 
-        // Payment::created();
+        Payment::create($payment_data);
     }
 
     /**
