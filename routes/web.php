@@ -13,22 +13,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('dashboard', function () {
-    return view('dashboard.index');
-});
+// Route::get('reset1', function () {
+//     return view('auth.passwords.email1');
+// });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
 
-Route::resource('customers', CustomerController::class);
+    Route::get('dashboard', function () {
+        return view('dashboard.index');
+    });
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('payment_methods', PaymentMethodController::class);
+    Route::resource('customers', CustomerController::class);
 
-Route::resource('menus', MenuController::class);
+    Route::resource('payment_methods', PaymentMethodController::class);
 
-Route::resource('orders', OrderController::class);
+    Route::resource('menus', MenuController::class);
 
-Route::resource('categories', CategoryController::class);
+    Route::resource('orders', OrderController::class);
 
-Route::resource('tables', TableController::class);
+    Route::resource('categories', CategoryController::class);
+
+    Route::resource('tables', TableController::class);
+});
