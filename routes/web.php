@@ -21,9 +21,6 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('dashboard', function () {
-        return view('dashboard.index');
-    });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::resource('customers', CustomerController::class);

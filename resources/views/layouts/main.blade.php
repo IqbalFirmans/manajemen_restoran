@@ -41,8 +41,8 @@
                                 aria-hidden="true"></span>
                         @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('dashboard') ? 'text-gray-800' : '' }} dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/dashboard">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('home') ? 'text-gray-800' : '' }} dark:hover:text-gray-200 dark:text-gray-100"
+                            href="/home">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -237,8 +237,8 @@
                                 @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
                                 aria-haspopup="true">
                                 <img class="object-cover w-8 h-8 rounded-full"
-                                    src="{{ asset('assets/img/avatar-1.png') }}"
-                                    alt="" aria-hidden="true" />
+                                    src="{{ asset('assets/img/avatar-1.png') }}" alt=""
+                                    aria-hidden="true" />
                             </button>
                             <template x-if="isProfileMenuOpen">
                                 <ul x-transition:leave="transition ease-in duration-150"
@@ -309,23 +309,47 @@
     </div>
 
 
-    <div role="alert"
-        class="alert fixed top-4 left-1/2 transform -translate-x-1/2 rounded-xl border border-gray-100 bg-white p-4 shadow-lg z-50">
-        <div class="flex items-start gap-4">
-            <span class="text-green-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="h-6 w-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </span>
 
-            <div class="flex-1">
-                <strong class="block font-medium text-gray-900">Success!</strong>
-                <p class="mt-1 text-sm text-gray-700">Lorem Ipsum Success Message</p>
+    @if ($success_message = Session::get('success'))
+        <div role="alert"
+            class="alert fixed top-4 left-1/2 transform -translate-x-1/2 rounded-xl border border-gray-100 bg-white p-4 shadow-lg z-50"
+            x-show="alertVisible">
+            <div class="flex items-start gap-4">
+                <span class="text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="h-6 w-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </span>
+
+                <div class="flex-1">
+                    <strong class="block font-medium text-gray-900">Success!</strong>
+                    <p class="mt-1 text-sm text-gray-700">{{ $success_message }}</p>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
+
+    @if ($error_message = Session::get('error'))
+        <div role="alert"
+            class="alert fixed top-4 left-1/2 transform -translate-x-1/2 rounded-xl border border-gray-100 bg-white p-4 shadow-lg z-50">
+            <div class="flex items-start gap-4">
+                <span class="text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="h-6 w-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                    </svg>
+                </span>
+
+                <div class="flex-1">
+                    <strong class="block font-medium text-gray-900">Error!</strong>
+                    <p class="mt-1 text-sm text-gray-700">{{ $error_message }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -368,6 +392,14 @@
                 }
             });
         }
+    </script>
+
+    <script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 1500);
     </script>
 </body>
 

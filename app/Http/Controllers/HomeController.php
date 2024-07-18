@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+
+        $customer_count = Customer::count();
+
+        return view('dashboard.index', compact('customer_count'));
     }
 }
