@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Models\Order;
 
 class CustomerController extends Controller
 {
@@ -16,8 +17,6 @@ class CustomerController extends Controller
         $customers = Customer::latest()->filter(request(['search']))->paginate(10)->withQueryString();
 
         return view('customers.index', compact('customers'));
-
-
     }
     /**
      * Show the form for creating a new resource.
@@ -66,7 +65,11 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->delete();
-        return redirect(route('customers.index'))->with('success', 'Berhasil menhapus data customer.');
+        if ($customer->orders()->count() > 0) {
+            return redirect(route('customers.index'))->with('error', 'Gagal menghapus data terkait Order.');
+        } else {
+            $customer->delete();
+            return redirect(route('customers.index'))->with('success', 'Berhasil menhapus data customer.');
+        }
     }
 }
