@@ -13,9 +13,6 @@ Route::get('/', function () {
     return view('login');
 });
 
-// Route::get('reset1', function () {
-//     return view('auth.passwords.email1');
-// });
 
 Auth::routes();
 
@@ -27,6 +24,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('payment_methods', PaymentMethodController::class);
 
+    Route::get('menus/deleted', [MenuController::class, 'showDeleted'])->name('menus.deleted');
+    Route::post('menus/restore/{id}', [MenuController::class, 'restore'])->name('menus.restore');
+    Route::delete('menus/force-delete/{id}', [MenuController::class, 'forceDelete'])->name('menus.forceDelete');
     Route::resource('menus', MenuController::class);
 
     Route::get('/orders/history', [OrderController::class, 'history'])->name('orders.history');

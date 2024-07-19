@@ -98,7 +98,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->menus()->count() > 0) {
-            return redirect()->route('categories.index')->with('error', 'Cannot delete Category with associated galleries.');
+            return redirect()->route('categories.index')->with('error', 'Cannot delete Category with associated Menu.');
         }
 
         try {

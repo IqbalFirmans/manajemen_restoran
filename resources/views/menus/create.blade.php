@@ -18,6 +18,7 @@
                         <span class="text-gray-700">
                             Menu Name
                         </span>
+                       
                         <input
                             class="block w-full mt-2 text-sm focus:outline-none form-input @error('name') border-red-600 @enderror"
                             placeholder="Name" name="name" value="{{ old('name') }}" />

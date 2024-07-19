@@ -151,8 +151,7 @@
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12m18 0A2.25 2.25 0 0 0 18.75 9.75H5.25A2.25 2.25 0 0 0 3 12m18 0V9a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9v3m9-3V4.875m0 1.875h.007M12 6.75v.007M15 6.75a3 3 0 0 0-6 0">
-                                </path>
+                                    d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
                             </svg>
                             <span class="ml-4">Orders</span>
                         </a>
@@ -229,7 +228,7 @@
                                 @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
                                 aria-haspopup="true">
                                 <img class="object-cover w-8 h-8 rounded-full"
-                                    src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" alt=""
+                                    src="{{ asset('assets/img/avatar-1.png') }}" alt=""
                                     aria-hidden="true" />
                             </button>
                             <template x-if="isProfileMenuOpen">
@@ -382,7 +381,7 @@
                 text: "You won't be able to revert this!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#9333ea",
+                confirmButtonColor: "#FF0000",
                 cancelButtonColor: "#9333ae",
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
@@ -400,7 +399,7 @@
                 text: "You won't be able to revert this!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#9333ea",
+                confirmButtonColor: "#FF0000",
                 cancelButtonColor: "#9333ae",
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {

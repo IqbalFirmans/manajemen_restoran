@@ -172,7 +172,7 @@ class OrderController extends Controller
             // dd($order->id);
             $order->delete();
 
-            return redirect()->route('orders.index')->with('success', 'Delete Order Success!');
+            return redirect()->route('orders.history')->with('success', 'Delete Order History Success!');
         } catch (\Throwable $e) {
             return redirect()->route('orders.index')->with('error', 'Failed Delete : ' . $e->getMessage());
         }

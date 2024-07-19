@@ -19,6 +19,7 @@
                             <span class="text-gray-700">
                                 Menu Name
                             </span>
+
                             <input
                                 class="block w-full mt-2 text-sm focus:outline-none form-input @error('name') border-red-600 @enderror"
                                 placeholder="Name" name="name" value="{{ $menu->name }}" />
@@ -72,6 +73,7 @@
                                 Image
                             </span>
                             <div>
+                                <input type="hidden" name="oldImage" value="{{ $menu->image }}">
                                 <input type="file" id="image" name="image"
                                     class="mt-2  xl:col-span-2 text-sm focus:outline-none form-input @error('image') border-red-600 @enderror"
                                     onchange="document.getElementById('img-preview').src = window.URL.createObjectURL(this.files[0])" />

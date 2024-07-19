@@ -22,6 +22,6 @@ class OrderDetail extends Model
 
     function menu()
     {
-        return $this->belongsTo(Menu::class, 'menu_id');
+        return $this->belongsTo(Menu::class, 'menu_id')->withTrashed();
     }
 }

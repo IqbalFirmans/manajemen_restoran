@@ -58,6 +58,43 @@ class MenuController extends Controller
         //
     }
 
+    public function showDeleted()
+    {
+        $deletedMenu = Menu::onlyTrashed()->paginate(5);
+
+        return view('menus.deleted', compact('deletedMenu'));
+    }
+
+    public function restore($id)
+    {
+        $menu = Menu::withTrashed()->find($id);
+
+        if ($menu) {
+            $menu->restore();
+
+            return redirect()->route('menus.index')->with('success', 'Restore Menu Success!');
+        }
+        return redirect()->route('menus.index')->with('erorr', 'Deleted Menu Not found!');
+
+    }
+
+    public function forceDelete($id)
+    {
+        $menu = Menu::withTrashed()->find($id);
+
+        if ($menu->details()->count() > 0) {
+            return redirect()->route('menus.deleted')->with('error', 'Cannot delete Menu with associated Details.');
+        }
+
+        if ($menu) {
+            $menu->forceDelete();
+
+            return redirect()->route('menus.deleted')->with('success', 'Permanently Deleted Menu Success!');
+        }
+
+        return redirect()->route('menus.deleted')->with('erorr', 'Deleted Menu Not found!');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -87,8 +124,6 @@ class MenuController extends Controller
                 $validateData['image'] = $request->file('image')->store('menu-image', 'public');
             }
 
-            // $validateData['excerpt'] = Str::limit(strip_tags($request->description), 100);
-
             $menu->update($validateData);
 
             return redirect()->route('menus.index')->with('success', 'Update Menu Success!');
@@ -104,11 +139,6 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         try {
-            
-            if ($menu->details()->exists()) {
-                return redirect()->route('menus.index')->with('error', 'Cannot delete Menu with associated Details.');
-            }
-
             if ($menu->image) {
                 Storage::disk('public')->delete($menu->image);
             }
