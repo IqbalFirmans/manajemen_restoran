@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
-@section('title', 'Edit Customer')
+@section('title', 'Create Customer')
 @section('content')
 
     <section class="mt-4">
         <div class="container grid px-6 mx-auto">
-            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md">
+                <h4 class="mb-4 text-lg font-semibold text-gray-600">
                     Create New Customer
                 </h4>
 
@@ -16,7 +16,7 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
 
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Customer Name
                             </span>
                             <input
@@ -24,14 +24,14 @@
                                 placeholder="Name" name="name" value="{{ $customer->name }}" />
 
                             @error('name')
-                                <span class="text-xs text-red-600 dark:text-red-400">
+                                <span class="text-xs text-red-600">
                                     {{ $message }}
                                 </span>
                             @enderror
                         </label>
 
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Customer Email * Optional
                             </span>
                             <input
@@ -39,14 +39,14 @@
                                 placeholder="Email" name="email" value="{{ $customer->email }}" />
 
                             @error('email')
-                                <span class="text-xs text-red-600 dark:text-red-400">
+                                <span class="text-xs text-red-600">
                                     {{ $message }}
                                 </span>
                             @enderror
                         </label>
 
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Customer Phone
                             </span>
                             <input
@@ -54,7 +54,7 @@
                                 placeholder="Phone" name="phone" value="{{ $customer->phone }}" />
 
                             @error('phone')
-                                <span class="text-xs text-red-600 dark:text-red-400">
+                                <span class="text-xs text-red-600">
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -69,7 +69,7 @@
                         </a>
                         <button type="submit"
                             class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            <span>Update</span>
+                            <span>Edit</span>
                         </button>
                     </div>
                 </form>

@@ -5,8 +5,8 @@
 
     <section class="mt-4">
         <div class="container grid px-6 mx-auto">
-            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md">
+                <h4 class="mb-4 text-lg font-semibold text-gray-600">
                     Create New Customer
                 </h4>
 
@@ -15,7 +15,7 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
 
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Customer Name
                             </span>
                             <input
@@ -23,14 +23,14 @@
                                 placeholder="Name" name="name" value="{{ old('name') }}" />
 
                             @error('name')
-                                <span class="text-xs text-red-600 dark:text-red-400">
+                                <span class="text-xs text-red-600">
                                     {{ $message }}
                                 </span>
                             @enderror
                         </label>
 
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Customer Email * Optional
                             </span>
                             <input
@@ -38,14 +38,14 @@
                                 placeholder="Email" name="email" value="{{ old('email') }}" />
 
                             @error('email')
-                                <span class="text-xs text-red-600 dark:text-red-400">
+                                <span class="text-xs text-red-600">
                                     {{ $message }}
                                 </span>
                             @enderror
                         </label>
 
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Customer Phone
                             </span>
                             <input
@@ -53,7 +53,7 @@
                                 placeholder="Phone" name="phone" value="{{ old('phone') }}" />
 
                             @error('phone')
-                                <span class="text-xs text-red-600 dark:text-red-400">
+                                <span class="text-xs text-red-600">
                                     {{ $message }}
                                 </span>
                             @enderror

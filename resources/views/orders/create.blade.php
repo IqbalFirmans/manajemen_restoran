@@ -20,6 +20,7 @@
             padding: 12px;
             margin-bottom: 12px;
             border-radius: 8px;
+            background-color: white;
         }
 
         .menu-card-content {
@@ -52,7 +53,7 @@
     <div class="container grid px-6 mx-auto">
         <main class="h-full pb-16 overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                <h2 class="my-6 text-2xl font-semibold text-gray-700">
                     Create Order
                 </h2>
                 <div>
@@ -68,7 +69,7 @@
                 <div class="grid gap-6 ml-2 mb-8 md:grid-cols-2 lg:grid-cols-3">
                     <label class="block text-sm">
                         <select
-                            class="js-example-basic-single block w-full mt-2 text-sm focus:outline-none @error('customer_id') border-red-600 @enderror "
+                            class="js-example-basic-single block w-full mt-2 text-sm focus:outline-none form-select @error('customer_id') border-red-600 @enderror"
                             name="customer_id">
                             @foreach ($customers as $customer)
                                 <option value="{{ $customer->id }}"
@@ -78,7 +79,7 @@
                         </select>
 
                         @error('customer_id')
-                            <span class="text-xs text-red-600 dark:text-red-400">
+                            <span class="text-xs text-red-600">
                                 {{ $message }}
                             </span>
                         @enderror
@@ -96,7 +97,7 @@
                         </select>
 
                         @error('payment_id')
-                            <span class="text-xs text-red-600 dark:text-red-400">
+                            <span class="text-xs text-red-600">
                                 {{ $message }}
                             </span>
                         @enderror
@@ -148,15 +149,15 @@
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0 transform translate-y-1/2" @click.away="closeModal"
                 @keydown.escape="closeModal"
-                class="px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:top-0 sm:inset-x-0 max-h-screen overflow-y-auto"
+                class="px-6 py-4 overflow-hidden bg-white rounded-lg sm:m-4 sm:top-0 sm:inset-x-0 max-h-screen overflow-y-auto"
                 role="dialog" id="modal">
                 <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
                 <header class="flex justify-end">
-                    <a class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover:text-gray-700"
+                    <a class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded hover:text-gray-700"
                         aria-label="close" @click="closeModal">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
                             <path
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 1 011.414 1.414L11.414 10l4.293 4.293a1 1 1 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 1 01-1.414 1.414L8.586 10 4.293 5.707a1 1 1 010-1.414z"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                 clip-rule="evenodd" fill-rule="evenodd"></path>
                         </svg>
                     </a>
@@ -164,13 +165,13 @@
                 <!-- Modal body -->
                 <div class="mb-6 max-h-80 overflow-y-auto">
                     <!-- Modal title -->
-                    <p class="mb-2 text-lg text-gray-700 font-bold dark:text-gray-300">
+                    <p class="mb-2 text-lg text-gray-700 font-bold">
                         Menu List
                     </p>
                     <!-- Modal description -->
                     @forelse ($menus as $menu)
                         <div
-                            class="flex justify-between items-center max-w-xs mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800 mb-4">
+                            class="flex justify-between items-center bg-white rounded-lg shadow-md mb-4">
                             <!-- Menu content -->
                             <div class="flex items-center">
                                 <div class="w-12 h-12 relative rounded-l-lg overflow-hidden">
@@ -178,9 +179,9 @@
                                         alt="Menu Image">
                                 </div>
                                 <div class="p-4">
-                                    <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                                    <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900">
                                         {{ $menu->name }}</h5>
-                                    <p class="text-lg font-semibold text-gray-900 dark:text-white">Rp.
+                                    <p class="text-lg font-semibold text-gray-900">Rp.
                                         {{ number_format($menu->price, 0, null, '.') }}</p>
                                 </div>
                             </div>
@@ -196,7 +197,7 @@
                             </div>
                         </div>
                     @empty
-                        <p class="mb-2 text-lg text-center text-gray-600 font-bold dark:text-gray-300">
+                        <p class="mb-2 text-lg text-center text-gray-600 font-bold">
                             Menu Not Found
                         </p>
                     @endforelse
@@ -207,8 +208,6 @@
         <div id="orderInfoText" class="text-gray-500 text-center mt-6" style="display: none;">
             There is no menu to order yet.
         </div>
-
-
     </div>
 
     <script>

@@ -5,15 +5,15 @@
 
     <section class="mt-4">
         <div class="container grid px-6 mx-auto">
-            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                    Create New Payment Methods
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md">
+                <h4 class="mb-4 text-lg font-semibold text-gray-600">
+                    Create New Payment Method
                 </h4>
 
                 <form action="{{ route('payment_methods.store') }}" method="post">
                     @csrf
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Type of Payment
                             </span>
                             <input
@@ -21,14 +21,14 @@
                                 placeholder="Name" name="name" value="{{ old('name') }}" />
 
                             @error('name')
-                                <span class="text-xs text-red-600 dark:text-red-400">
+                                <span class="text-xs text-red-600">
                                     {{ $message }}
                                 </span>
                             @enderror
                         </label>
 
                         <label class="mt-4 block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Description
                             </span>
                             <input
@@ -36,26 +36,26 @@
                                 placeholder="Description" name="description" value="{{ old('description') }}" />
 
                             @error('description')
-                                <span class="text-xs text-red-600 dark:text-red-400">
+                                <span class="text-xs text-red-600">
                                     {{ $message }}
                                 </span>
                             @enderror
                         </label>
 
                         <div class="mt-4 text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
+                            <span class="text-gray-700">
                                 Status
                             </span>
                             <div class="mt-2">
-                                <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                                <label class="inline-flex items-center text-gray-600">
                                     <input type="radio"
-                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple"
                                         name="status" value="active" checked/>
                                     <span class="ml-2">Active</span>
                                 </label>
-                                <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                <label class="inline-flex items-center ml-6 text-gray-600">
                                     <input type="radio"
-                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple"
                                         name="status" value="nonactive" />
                                     <span class="ml-2">Nonactive</span>
                                 </label>

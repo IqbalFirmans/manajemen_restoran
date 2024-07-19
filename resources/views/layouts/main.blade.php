@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<html x-data="data()" lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -26,22 +26,21 @@
 </head>
 
 <body>
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+    <div class="flex h-screen bg-gray-50">
         <!-- Desktop sidebar -->
-        <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
-            <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="/dashboard">
+        <aside class="z-20 hidden w-64 overflow-y-auto bg-white md:block flex-shrink-0">
+            <div class="py-4 text-gray-500">
+                <a class="ml-6 text-lg font-bold text-gray-800" href="/dashboard">
                     Restaurant
                 </a>
                 <ul class="mt-6">
                     <li class="relative px-6 py-3">
-
-                        @if (Request::is('dashboard'))
+                        @if (Request::is('home'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('home') ? 'text-gray-800' : '' }} dark:hover:text-gray-200 dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('home') ? 'text-gray-800' : '' }}"
                             href="/home">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -54,15 +53,13 @@
                     </li>
                 </ul>
                 <ul>
-
                     <li class="relative px-6 py-3">
-
                         @if (Request::is('customers'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('customers') ? 'text-gray-800' : '' }} dark:hover:text-gray-200 dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('customers') ? 'text-gray-800' : '' }}"
                             href="/customers">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -73,15 +70,13 @@
                         </a>
                     </li>
 
-
                     <li class="relative px-6 py-3">
-
                         @if (Request::is('menus'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('menus') ? 'text-gray-800' : '' }} dark:hover:text-gray-200 dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('menus') ? 'text-gray-800' : '' }}"
                             href="/menus">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -94,18 +89,17 @@
                     </li>
 
                     <li class="relative px-6 py-3">
-
                         @if (Request::is('categories'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('categories') ? 'text-gray-800' : '' }} dark:hover:text-gray-200 dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('categories') ? 'text-gray-800' : '' }}"
                             href="/categories">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V7a2 2 0 00-2-2h-3a2 2 0 00-2 2v4m-8 0V7a2 2 0 012-2h3a2 2 0 012 2v4M3 13h.01M21 13h.01M7 13h.01M3 17h.01M7 17h.01M3 21h.01M7 21h.01M17 13h.01M21 17h.01M17 17h.01M21 21h.01M17 21h.01">
                                 </path>
                             </svg>
                             <span class="ml-4">Categories</span>
@@ -113,64 +107,56 @@
                     </li>
 
                     <li class="relative px-6 py-3">
-
                         @if (Request::is('tables'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('tables') ? 'text-gray-800' : '' }} dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('tables') ? 'text-gray-800' : '' }}"
                             href="/tables">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                    d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m20.25 7.5-3.796 10.848A2.25 2.25 0 0 1 14.313 19.5H9.688a2.25 2.25 0 0 1-2.14-1.652L3.75 7.5m16.5 0H3.75m16.5 0a2.25 2.25 0 0 0-2.122-1.5H5.872a2.25 2.25 0 0 0-2.122 1.5m16.5 0H3.75m6-3h4.5m-4.5 0a2.25 2.25 0 1 0-4.5 0m4.5 0h4.5m-4.5 0a2.25 2.25 0 1 1 4.5 0M6.75 10.5v2.25m0 1.5V18m0-6h2.25m1.5-1.5H18m-9 1.5h1.5m1.5-1.5v1.5m1.5 1.5V18m0-6h4.5m-4.5 0v2.25m0 1.5V18m0-6h4.5m0 0v2.25m0 1.5V18" />
                             </svg>
                             <span class="ml-4">Tables</span>
                         </a>
                     </li>
 
                     <li class="relative px-6 py-3">
-
                         @if (Request::is('payment_methods'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('payment_methods') ? 'text-gray-800' : '' }} dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('payment_methods') ? 'text-gray-800' : '' }}"
                             href="/payment_methods">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
                             </svg>
-
-
                             <span class="ml-4">Payment Methods</span>
                         </a>
                     </li>
 
                     <li class="relative px-6 py-3">
-
                         @if (Request::is('orders'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
                         @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('orders') ? 'text-gray-800' : '' }} dark:text-gray-100"
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('orders') ? 'text-gray-800' : '' }}"
                             href="/orders">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-
                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
+                                    d="M21 12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12m18 0A2.25 2.25 0 0 0 18.75 9.75H5.25A2.25 2.25 0 0 0 3 12m18 0V9a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9v3m9-3V4.875m0 1.875h.007M12 6.75v.007M15 6.75a3 3 0 0 0-6 0">
+                                </path>
                             </svg>
                             <span class="ml-4">Orders</span>
                         </a>
                     </li>
-
                 </ul>
                 <div class="px-6 my-6">
                     <a href="/orders/create"
@@ -181,14 +167,10 @@
                 </div>
             </div>
         </aside>
-        <!-- Mobile sidebar -->
-        <!-- Backdrop -->
 
         <div class="flex flex-col flex-1 w-full">
-            <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-                <div
-                    class="container flex items-center justify-end h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
-                    <!-- Mobile hamburger -->
+            <header class="z-10 py-4 bg-white shadow-md">
+                <div class="container flex items-center justify-end h-full px-6 mx-auto text-purple-600">
                     <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
                         @click="toggleSideMenu" aria-label="Menu">
                         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -199,26 +181,6 @@
                     </button>
                     @yield('search')
                     <ul class="flex items-center flex-shrink-0 space-x-6">
-                        <!-- Theme toggler -->
-                        <li class="flex">
-                            <button class="rounded-md focus:outline-none focus:shadow-outline-purple"
-                                @click="toggleTheme" aria-label="Toggle color mode">
-                                <template x-if="!dark">
-                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
-                                        </path>
-                                    </svg>
-                                </template>
-                                <template x-if="dark">
-                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                </template>
-                            </button>
-                        </li>
-                        <!-- Notifications menu -->
                         <li class="relative">
                             <button
                                 class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
@@ -226,49 +188,77 @@
                                 aria-label="Notifications" aria-haspopup="true">
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                     <path
-                                        d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z">
+                                        d="M10 2a6 6 0 00-6 6v2a6 6 0 01-1.293 3.707L2 15h16l-.707-.293A6 6 0 0116 10V8a6 6 0 00-6-6zM10 18a2 2 0 001.995-1.85L12 16H8a2 2 0 002 2z">
                                     </path>
                                 </svg>
+                                <span aria-hidden="true"
+                                    class="absolute top-0 right-0 inline-block w-3 h-3 transform bg-red-600 border-2 border-white rounded-full"></span>
                             </button>
+                            <template x-if="isNotificationsMenuOpen">
+                                <ul x-transition:leave="transition ease-in duration-150"
+                                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                    @click.away="closeNotificationsMenu" @keydown.escape="closeNotificationsMenu"
+                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md">
+                                    <li class="flex">
+                                        <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold leading-5 text-gray-800 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800"
+                                            href="#">
+                                            <span>Messages</span>
+                                            <span
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-purple-600 rounded-full">13</span>
+                                        </a>
+                                    </li>
+                                    <li class="flex">
+                                        <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold leading-5 text-gray-800 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800"
+                                            href="#">
+                                            <span>Sales</span>
+                                            <span
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-purple-600 rounded-full">2</span>
+                                        </a>
+                                    </li>
+                                    <li class="flex">
+                                        <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold leading-5 text-gray-800 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800"
+                                            href="#">
+                                            <span>Alerts</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </template>
                         </li>
-                        <!-- Profile menu -->
                         <li class="relative">
                             <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
                                 @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
                                 aria-haspopup="true">
                                 <img class="object-cover w-8 h-8 rounded-full"
-                                    src="{{ asset('assets/img/avatar-1.png') }}" alt=""
+                                    src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" alt=""
                                     aria-hidden="true" />
                             </button>
                             <template x-if="isProfileMenuOpen">
                                 <ul x-transition:leave="transition ease-in duration-150"
                                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
                                     @click.away="closeProfileMenu" @keydown.escape="closeProfileMenu"
-                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
-                                    aria-label="submenu">
+                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md">
                                     <li class="flex">
-                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800"
                                             href="#">
                                             <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path
-                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                                    d="M5.121 17.804A2 2 0 015 16.667V12a7 7 0 1114 0v4.667a2 2 0 01-.121.137M7 11V8a5 5 0 1110 0v3m-3 5h2a2 2 0 002-2v-1.333M6 11v4.667C6 17.403 6.597 18 7.333 18h2.334C10.403 18 11 17.403 11 16.667V12a2 2 0 00-2-2H6.667C6.597 10 6 10.597 6 11z">
                                                 </path>
                                             </svg>
                                             <span>Profile</span>
                                         </a>
                                     </li>
                                     <li class="flex">
-                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800"
                                             href="#">
                                             <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path
-                                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                                    d="M8 12v-1.5a3.5 3.5 0 117 0V12M5.75 13.75a1.75 1.75 0 00-3.5 0v5.5A1.75 1.75 0 003.75 21h16.5a1.75 1.75 0 001.75-1.75v-5.5a1.75 1.75 0 00-3.5 0v3.5h-12v-3.5z">
                                                 </path>
-                                                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             </svg>
                                             <span>Settings</span>
                                         </a>
@@ -300,7 +290,6 @@
                     </ul>
                 </div>
             </header>
-
             <main class="h-full overflow-y-auto">
                 @yield('content')
             </main>
