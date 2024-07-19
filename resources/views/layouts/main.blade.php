@@ -18,7 +18,7 @@
 
     <script src="{{ asset('assets/js/focus-trap.js') }}" defer></script>
 
-    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+    <script src="https://cdn.tailwindcss.com"></script>
     {{-- jQuery --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -352,6 +352,24 @@
     @endif
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmAccept(id) {
+            Swal.fire({
+                title: "Are you yes?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#9333ea",
+                cancelButtonColor: "#9333ae",
+                confirmButtonText: "Yes, complete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(`update-form-${id}`).submit();
+                }
+            });
+        }
+    </script>
+
     <script>
         function confirmDelete(id) {
             Swal.fire({

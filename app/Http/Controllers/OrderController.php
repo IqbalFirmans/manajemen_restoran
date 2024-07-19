@@ -56,6 +56,12 @@ class OrderController extends Controller
             $menu_id = $dataMenuOrder['menu_id'];
             $quantity = $dataMenuOrder['jumlah'];
 
+            if ($quantity <= 0) {
+                // Jika menu tidak ditemukan, batalkan proses
+                $order->delete(); // Hapus order yang sudah dibuat
+                return redirect()->route('orders.create')->with('error', 'Quantity harus diisi!');
+            }
+
             // Ambil harga menu dari database
             $menu = Menu::find($menu_id);
             $price = $menu->price;
@@ -111,7 +117,11 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $order->update([
+            'status' => 'accepted'
+        ]);
+
+        return redirect()->route('orders.index')->with('success', 'Accepted Order Success!');
     }
 
     /**
@@ -120,12 +130,12 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         try {
+            // dd($order->id);
             $order->delete();
 
             return redirect()->route('orders.index')->with('success', 'Delete Order Success!');
         } catch (\Throwable $e) {
             return redirect()->route('orders.index')->with('error', 'Failed Delete : ' . $e->getMessage());
-
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,7 +27,8 @@ class HomeController extends Controller
     {
 
         $customer_count = Customer::count();
+        $order_count = Order::count();
 
-        return view('dashboard.index', compact('customer_count'));
+        return view('dashboard.index', compact('customer_count', 'order_count'));
     }
 }

@@ -41,6 +41,14 @@
         }
     </style>
 
+    @if ($errors->all())
+        @foreach ($errors->all() as $error)
+            <ul>
+                <li>{{ $error }}</li>
+            </ul>
+        @endforeach
+    @endif
+
     <div class="container grid px-6 mx-auto">
         <main class="h-full pb-16 overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
@@ -110,7 +118,8 @@
                             </div>
                             <div class="menu-card-actions">
                                 <input type="hidden" name="menu_id" value="[]">
-                                <input type="number" class="block w-16 text-sm focus:outline-none form-input quantity-input"
+                                <input type="number"
+                                    class="block w-16 text-sm focus:outline-none form-input quantity-input"
                                     placeholder="Quantity" name="jumlah" value="1">
                                 <button
                                     class="remove-menu-item px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
@@ -165,7 +174,8 @@
                             <!-- Menu content -->
                             <div class="flex items-center">
                                 <div class="w-12 h-12 relative rounded-l-lg overflow-hidden">
-                                    <img class="object-cover" src="{{ asset('storage/' . $menu->image) }}" alt="Menu Image">
+                                    <img class="object-cover" src="{{ asset('storage/' . $menu->image) }}"
+                                        alt="Menu Image">
                                 </div>
                                 <div class="p-4">
                                     <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
@@ -186,9 +196,9 @@
                             </div>
                         </div>
                     @empty
-                    <p class="mb-2 text-lg text-center text-gray-600 font-bold dark:text-gray-300">
-                        Menu Not Found
-                    </p>
+                        <p class="mb-2 text-lg text-center text-gray-600 font-bold dark:text-gray-300">
+                            Menu Not Found
+                        </p>
                     @endforelse
                 </div>
             </div>
