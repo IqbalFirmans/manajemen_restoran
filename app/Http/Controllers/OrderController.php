@@ -30,7 +30,7 @@ class OrderController extends Controller
     {
         $menus = Menu::all();
         $customers = Customer::all();
-        $payments = PaymentMethod::all();
+        $payments = PaymentMethod::where('status', 'active')->get();
 
         return view('orders.create', compact('menus', 'customers', 'payments'));
     }
@@ -41,6 +41,14 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request)
     {
         // dd($request);
+        if (!$request->customer_id) {
+            return redirect()->route('orders.create')->with('error', 'Customer field required!');
+        }
+
+        if (!$request->payment_id) {
+            return redirect()->route('orders.create')->with('error', 'Payment field required!');
+        }
+
         $dataOrder = [
             'customer_id' => $request->customer_id,
             'status' => 'pending'
@@ -59,7 +67,7 @@ class OrderController extends Controller
             if ($quantity <= 0) {
                 // Jika menu tidak ditemukan, batalkan proses
                 $order->delete(); // Hapus order yang sudah dibuat
-                return redirect()->route('orders.create')->with('error', 'Quantity harus diisi!');
+                return redirect()->route('orders.create')->with('error', 'Quantity field required!');
             }
 
             // Ambil harga menu dari database

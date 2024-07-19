@@ -42,14 +42,6 @@
         }
     </style>
 
-    @if ($errors->all())
-        @foreach ($errors->all() as $error)
-            <ul>
-                <li>{{ $error }}</li>
-            </ul>
-        @endforeach
-    @endif
-
     <div class="container grid px-6 mx-auto">
         <main class="h-full pb-16 overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
@@ -170,13 +162,11 @@
                     </p>
                     <!-- Modal description -->
                     @forelse ($menus as $menu)
-                        <div
-                            class="flex justify-between items-center bg-white rounded-lg shadow-md mb-4">
+                        <div class="flex justify-between items-center bg-white rounded-lg shadow-md mb-4">
                             <!-- Menu content -->
                             <div class="flex items-center">
                                 <div class="w-12 h-12 relative rounded-l-lg overflow-hidden">
-                                    <img class="object-cover" src="{{ asset('storage/' . $menu->image) }}"
-                                        alt="Menu Image">
+                                    <img class="object-cover" src="{{ asset('storage/' . $menu->image) }}" alt="Menu Image">
                                 </div>
                                 <div class="p-4">
                                     <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900">

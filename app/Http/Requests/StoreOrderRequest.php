@@ -21,6 +21,17 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [];
+        return [
+            // 'customer_id' => ['required'],
+            // 'method_id' => ['required']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'customer_id.required' => 'Customer field required.',
+            'method_id.required' => 'Payment field required.'
+        ];
     }
 }

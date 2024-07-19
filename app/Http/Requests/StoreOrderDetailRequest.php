@@ -22,7 +22,7 @@ class StoreOrderDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => ['required'],
+            'customer' => ['required'],
             'menu_id' => ['required'],
             'quantity' => ['required', 'min:1']
         ];
