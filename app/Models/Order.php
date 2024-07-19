@@ -14,6 +14,21 @@ class Order extends Model
         'status',
     ];
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('created_at', 'like', '%' . $search . '%')
+                    ->orWhereHas('payment', function ($query) use ($search) {
+                        $query->where('total_bayar', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('customer', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        });
+    }
+
     function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');

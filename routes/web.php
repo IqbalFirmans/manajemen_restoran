@@ -10,7 +10,7 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\TableController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 // Route::get('reset1', function () {
@@ -29,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('menus', MenuController::class);
 
+    Route::get('/orders/history', [OrderController::class, 'history'])->name('orders.history');
+    Route::put('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::put('/orders/{order}/accept', [OrderController::class, 'accept'])->name('orders.accept');
     Route::resource('orders', OrderController::class);
 
     Route::resource('categories', CategoryController::class);

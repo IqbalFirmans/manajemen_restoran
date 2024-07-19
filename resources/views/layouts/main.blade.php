@@ -353,12 +353,28 @@
                 confirmButtonText: "Yes, complete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById(`update-form-${id}`).submit();
+                    document.getElementById(`accept-form-${id}`).submit();
                 }
             });
         }
     </script>
-
+    <script>
+        function confirmCancel(id) {
+            Swal.fire({
+                title: "Are you yes?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#9333ea",
+                cancelButtonColor: "#9333ae",
+                confirmButtonText: "Yes, complete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(`cancel-form-${id}`).submit();
+                }
+            });
+        }
+    </script>
     <script>
         function confirmDelete(id) {
             Swal.fire({

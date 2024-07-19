@@ -12,14 +12,14 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </div>
-            <form action="{{ route('orders.index') }}" method="get">
+            <form action="{{ route('orders.history') }}" method="get">
                 <input
                     class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
                     type="search" name="search" value="{{ request('search') }}" autocomplete="off"
                     placeholder="Search for Order" autofocus aria-label="Search" />
             </form>
         </div>
-        <a href="{{ route('orders.index') }}"
+        <a href="{{ route('orders.history') }}"
             class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
             <span>Refresh</span>
         </a>
@@ -32,16 +32,6 @@
         <h2 class="my-6 text-2xl font-semibold text-gray-700">
             Orders
         </h2>
-
-        <a href="{{ route('orders.history') }}"
-            class="flex items-center px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-slate-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-            <span>History</span>
-            <svg class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                    clip-rule="evenodd" fill-rule="evenodd"></path>
-            </svg>
-        </a>
     </div>
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs mb-5">
@@ -88,7 +78,7 @@
                                     Rp. {{ number_format($order->payment->total_bayar, 0, null, '.') }}
                                 </p>
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3 flex">
                                 <div class="flex items-center space-x-4 text-sm">
                                     <a href="{{ route('orders.show', $order->id) }}"
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
@@ -101,41 +91,26 @@
                                         </svg>
                                     </a>
 
-                                    <button onclick="confirmAccept('{{ $order->id }}')"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Accept">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-
-                                    <button onclick="confirmCancel('{{ $order->id }}')"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Accept">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-
-                                    <form id="accept-form-{{ $order->id }}"
-                                        action="{{ route('orders.accept', $order->id) }}" method="post"
-                                        style="display: none;">
-                                        @csrf
-                                        @method('PUT')
-                                    </form>
-
-                                    <form id="cancel-form-{{ $order->id }}"
-                                        action="{{ route('orders.cancel', $order->id) }}" method="post"
-                                        style="display: none;">
-                                        @csrf
-                                        @method('PUT')
-                                    </form>
                                 </div>
+
+                                <button onclick="confirmDelete('{{ $order->id }}')"
+                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-gray"
+                                    aria-label="Delete">
+                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+
+                                <form id="delete-form-{{ $order->id }}"
+                                    action="{{ route('orders.destroy', $order->id) }}" method="post"
+                                    style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
                             </td>
+
                         </tr>
                     @empty
                         <tr>

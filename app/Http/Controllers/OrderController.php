@@ -19,8 +19,25 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::where('status', 'pending')
+            ->latest()
+            ->filter(request(['search']))
+            ->paginate(5)
+            ->withQueryString();
+
         return view('orders.index', compact('orders'));
+    }
+
+    public function history()
+    {
+        $orders = Order::where('status', 'accepted')
+            ->orWhere('status', 'canceled')
+            ->latest()
+            ->filter(request(['search']))
+            ->paginate(5)
+            ->withQueryString();
+
+        return view('orders.history', compact('orders'));
     }
 
     /**
@@ -125,11 +142,25 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
+        //
+    }
+
+    public function accept(UpdateOrderRequest $request, Order $order)
+    {
         $order->update([
             'status' => 'accepted'
         ]);
 
         return redirect()->route('orders.index')->with('success', 'Accepted Order Success!');
+    }
+
+    public function cancel(UpdateOrderRequest $request, Order $order)
+    {
+        $order->update([
+            'status' => 'canceled'
+        ]);
+
+        return redirect()->route('orders.index')->with('success', 'Canceled Order Success!');
     }
 
     /**
