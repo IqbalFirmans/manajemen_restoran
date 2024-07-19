@@ -106,7 +106,7 @@
                         </a>
                     </li>
 
-                    <li class="relative px-6 py-3">
+                    {{-- <li class="relative px-6 py-3">
                         @if (Request::is('tables'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
@@ -121,7 +121,7 @@
                             </svg>
                             <span class="ml-4">Tables</span>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="relative px-6 py-3">
                         @if (Request::is('payment_methods'))

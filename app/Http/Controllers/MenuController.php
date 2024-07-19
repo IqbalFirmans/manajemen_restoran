@@ -60,7 +60,7 @@ class MenuController extends Controller
 
     public function showDeleted()
     {
-        $deletedMenu = Menu::onlyTrashed()->paginate(5);
+        $deletedMenu = Menu::onlyTrashed()->latest()->filter(request(['search']))->paginate(5)->withQueryString();
 
         return view('menus.deleted', compact('deletedMenu'));
     }
