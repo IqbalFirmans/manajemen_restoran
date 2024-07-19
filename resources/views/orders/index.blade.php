@@ -17,8 +17,10 @@
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
                             <th class="px-4 py-3">No</th>
-                            <th class="px-4 py-3">Customer ID</th>
+                            <th class="px-4 py-3">Tanggal</th>
+                            <th class="px-4 py-3">Customer</th>
                             <th class="px-4 py-3">Status</th>
+                            <th class="px-4 py-3">Total Harga</th>
                             <th class="px-4 py-3">Actions</th>
                         </tr>
                     </thead>
@@ -27,6 +29,9 @@
                             <tr class="text-gray-700">
                                 <td class="px-4 py-3">
                                     {{ $loop->iteration }} .
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="font-semibold text-sm">{{ $order->created_at }}</p>
                                 </td>
                                 <td class="px-4 py-3">
                                     <p class="font-semibold text-sm">{{ $order->customer->name }}</p>
@@ -43,6 +48,11 @@
                                             text-orange-700 bg-orange-100 rounded-full @endif">
                                         {{ $order->status }}
                                     </span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="font-semibold text-sm">
+                                        Rp. {{ number_format($order->payment->total_bayar, 0, null, '.') }}
+                                    </p>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">
