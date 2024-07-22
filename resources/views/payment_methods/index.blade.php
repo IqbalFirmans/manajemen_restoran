@@ -44,6 +44,11 @@
     </div>
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs mb-5">
+        <div class="p-2">
+            <p class="text-sm text-gray-600">
+                Page {{ $payment_methods->currentPage() }} of {{ $payment_methods->lastPage() }}
+            </p>
+        </div>
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>

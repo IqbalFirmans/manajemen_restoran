@@ -33,24 +33,24 @@
                             </tr>
                         @endforelse
                         @if($orders->count() > 0)
-                            <tr class="bg-gray-50">
-                                <td class="px-4 py-3 text-sm font-semibold text-gray-700">
-                                    Total Pembayaran
-                                </td>
-                                <td></td>
-                                <td class="px-4 py-3 text-sm font-semibold text-gray-700" colspan="2">
-                                    Rp {{ number_format($payment->total_bayar, 0, ',', '.') }}
-                                </td>
-                            </tr>
-                            <tr class="bg-gray-50">
-                                <td class="px-4 py-3 text-sm font-semibold text-gray-700">
-                                    Jenis Pembayaran
-                                </td>
-                                <td></td>
-                                <td class="px-4 py-3 text-sm font-semibold text-gray-700" colspan="2">
-                                    {{ $payment->method->name }}
-                                </td>
-                            </tr>
+                        <tr class="bg-gray-50">
+                            <td class="px-4 py-3 text-sm font-semibold text-gray-700">
+                                Jenis Pembayaran
+                            </td>
+                            <td></td>
+                            <td class="px-4 py-3 text-sm font-semibold text-gray-700" colspan="2">
+                                {{ $payment->method->name }}
+                            </td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="px-4 py-3 text-sm font-semibold text-gray-700">
+                                Total Pembayaran
+                            </td>
+                            <td></td>
+                            <td class="px-4 py-3 text-sm font-semibold text-gray-700" colspan="2">
+                                Rp {{ number_format($payment->total_bayar, 0, ',', '.') }}
+                            </td>
+                        </tr>
                         @endif
                     </tbody>
                 </table>

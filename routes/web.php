@@ -9,16 +9,12 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\TableController;
 
-Route::get('/', function () {
-    return view('login');
-});
-
 
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::resource('customers', CustomerController::class);
 
