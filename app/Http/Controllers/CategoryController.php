@@ -37,6 +37,8 @@ class CategoryController extends Controller
         $validateData = $request->validated();
 
 
+        $validateData['name'] = ucwords(strtolower($validateData['name']));
+
         try {
             Category::create($validateData);
 
@@ -77,6 +79,8 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $validateData = $request->validated();
+
+        $validateData['name'] = ucwords(strtolower($validateData['name']));
 
         if (!$category) {
             return redirect()->route('categories.index')->with('error', 'Category not found.');
