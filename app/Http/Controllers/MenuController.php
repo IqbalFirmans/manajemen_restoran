@@ -75,7 +75,6 @@ class MenuController extends Controller
             return redirect()->route('menus.index')->with('success', 'Restore Menu Success!');
         }
         return redirect()->route('menus.index')->with('erorr', 'Deleted Menu Not found!');
-
     }
 
     public function forceDelete($id)
@@ -87,6 +86,11 @@ class MenuController extends Controller
         }
 
         if ($menu) {
+            
+            if ($menu->image) {
+                Storage::disk('public')->delete($menu->image);
+            }
+
             $menu->forceDelete();
 
             return redirect()->route('menus.deleted')->with('success', 'Permanently Deleted Menu Success!');
@@ -139,10 +143,6 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         try {
-            if ($menu->image) {
-                Storage::disk('public')->delete($menu->image);
-            }
-
             $menu->delete();
 
             return redirect()->route('menus.index')->with('success', 'Delete Menu Success!');
