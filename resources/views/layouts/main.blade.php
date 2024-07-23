@@ -71,6 +71,24 @@
                     </li>
 
                     <li class="relative px-6 py-3">
+                        @if (Request::is('categories'))
+                            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                                aria-hidden="true"></span>
+                        @endif
+
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('categories') ? 'text-gray-800' : '' }}"
+                            href="/categories">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V7a2 2 0 00-2-2h-3a2 2 0 00-2 2v4m-8 0V7a2 2 0 012-2h3a2 2 0 012 2v4M3 13h.01M21 13h.01M7 13h.01M3 17h.01M7 17h.01M3 21h.01M7 21h.01M17 13h.01M21 17h.01M17 17h.01M21 21h.01M17 21h.01">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Categories</span>
+                        </a>
+                    </li>
+
+                    <li class="relative px-6 py-3">
                         @if (Request::is('menus'))
                             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                                 aria-hidden="true"></span>
@@ -88,23 +106,7 @@
                         </a>
                     </li>
 
-                    <li class="relative px-6 py-3">
-                        @if (Request::is('categories'))
-                            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                                aria-hidden="true"></span>
-                        @endif
 
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 {{ Request::is('categories') ? 'text-gray-800' : '' }}"
-                            href="/categories">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V7a2 2 0 00-2-2h-3a2 2 0 00-2 2v4m-8 0V7a2 2 0 012-2h3a2 2 0 012 2v4M3 13h.01M21 13h.01M7 13h.01M3 17h.01M7 17h.01M3 21h.01M7 21h.01M17 13h.01M21 17h.01M17 17h.01M21 21h.01M17 21h.01">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Categories</span>
-                        </a>
-                    </li>
 
                     {{-- <li class="relative px-6 py-3">
                         @if (Request::is('tables'))
