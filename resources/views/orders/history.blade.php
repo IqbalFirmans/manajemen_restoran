@@ -30,7 +30,7 @@
 
     <div class="flex justify-between items-center mb-4">
         <h2 class="my-6 text-2xl font-semibold text-gray-700">
-            Orders History  
+            Orders History
         </h2>
     </div>
 
@@ -75,7 +75,7 @@
                             </td>
                             <td class="px-4 py-3">
                                 <p class="font-semibold text-sm">
-                                    Rp. {{ number_format($order->payment->total_bayar, 0, null, '.') }}
+                                    Rp. {{ number_format($order->orderDetails->current_price, 0, null, '.') }}
                                 </p>
                             </td>
                             <td class="px-4 py-3 flex">

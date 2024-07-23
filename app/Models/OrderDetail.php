@@ -12,15 +12,16 @@ class OrderDetail extends Model
     protected $fillable = [
         'order_id',
         'menu_id',
-        'quantity'
+        'quantity',
+        'current_price'
     ];
 
-    function order()
+    public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
 
-    function menu()
+    public function menu()
     {
         return $this->belongsTo(Menu::class, 'menu_id')->withTrashed();
     }

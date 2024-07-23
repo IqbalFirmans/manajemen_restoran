@@ -22,7 +22,8 @@
                                     Quantity: {{ $order->quantity }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    Harga: Rp {{ number_format($order->menu->price * $order->quantity, 0, ',', '.') }}
+                                    Harga: Rp
+                                    {{ number_format($order->current_price * $order->quantity, 0, ',', '.') }}
                                 </td>
                             </tr>
                         @empty
@@ -32,25 +33,25 @@
                                 </td>
                             </tr>
                         @endforelse
-                        @if($orders->count() > 0)
-                        <tr class="bg-gray-50">
-                            <td class="px-4 py-3 text-sm font-semibold text-gray-700">
-                                Jenis Pembayaran
-                            </td>
-                            <td></td>
-                            <td class="px-4 py-3 text-sm font-semibold text-gray-700" colspan="2">
-                                {{ $payment->method->name }}
-                            </td>
-                        </tr>
-                        <tr class="bg-gray-50">
-                            <td class="px-4 py-3 text-sm font-semibold text-gray-700">
-                                Total Pembayaran
-                            </td>
-                            <td></td>
-                            <td class="px-4 py-3 text-sm font-semibold text-gray-700" colspan="2">
-                                Rp {{ number_format($payment->total_bayar, 0, ',', '.') }}
-                            </td>
-                        </tr>
+                        @if ($orders->count() > 0)
+                            <tr class="bg-gray-50">
+                                <td class="px-4 py-3 text-sm font-semibold text-gray-700">
+                                    Jenis Pembayaran
+                                </td>
+                                <td></td>
+                                <td class="px-4 py-3 text-sm font-semibold text-gray-700" colspan="2">
+                                    {{ $payment->method->name }}
+                                </td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-4 py-3 text-sm font-semibold text-gray-700">
+                                    Total Pembayaran
+                                </td>
+                                <td></td>
+                                <td class="px-4 py-3 text-sm font-semibold text-gray-700" colspan="2">
+                                    Rp {{ number_format($payment->total_bayar, 0, ',', '.') }}
+                                </td>
+                            </tr>
                         @endif
                     </tbody>
                 </table>

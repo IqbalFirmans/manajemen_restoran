@@ -34,7 +34,6 @@ class OrderController extends Controller
             ->orWhere('status', 'canceled')
             ->latest()
             ->filter(request(['search']))
-            ->paginate(5)
             ->withQueryString();
 
         return view('orders.history', compact('orders'));
@@ -105,7 +104,8 @@ class OrderController extends Controller
             $data = [
                 'order_id' => $order_id,
                 'menu_id' => $menu_id,
-                'quantity' => $quantity
+                'quantity' => $quantity,
+                'current_price' => $price
             ];
 
             // dd($data);
@@ -128,6 +128,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        // dd($order);
         $orders = OrderDetail::where('order_id', $order->id)->get();
         $payment = Payment::where('order_id', $order->id)->first();
 

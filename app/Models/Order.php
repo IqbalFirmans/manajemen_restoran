@@ -29,17 +29,17 @@ class Order extends Model
         });
     }
 
-    function customer()
+    public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
 
-    function payment()
+    public function payment()
     {
         return $this->hasOne(Payment::class);
     }
 
-    function orderDetails()
+    public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);
     }
