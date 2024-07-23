@@ -34,6 +34,7 @@ class OrderController extends Controller
             ->orWhere('status', 'canceled')
             ->latest()
             ->filter(request(['search']))
+            ->paginate(5)
             ->withQueryString();
 
         return view('orders.history', compact('orders'));

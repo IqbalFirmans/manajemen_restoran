@@ -75,7 +75,7 @@
                             </td>
                             <td class="px-4 py-3">
                                 <p class="font-semibold text-sm">
-                                    Rp. {{ number_format($order->orderDetails->current_price, 0, null, '.') }}
+                                    Rp. {{ number_format($order->payment->total_bayar, 0, null, '.') }}
                                 </p>
                             </td>
                             <td class="px-4 py-3 flex">
