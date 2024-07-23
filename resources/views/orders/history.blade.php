@@ -30,7 +30,7 @@
 
     <div class="flex justify-between items-center mb-4">
         <h2 class="my-6 text-2xl font-semibold text-gray-700">
-            Orders
+            Orders History  
         </h2>
     </div>
 
