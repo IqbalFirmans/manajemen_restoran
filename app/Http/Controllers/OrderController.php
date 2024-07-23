@@ -66,6 +66,7 @@ class OrderController extends Controller
             return redirect()->route('orders.create')->with('error', 'Payment field required!');
         }
 
+
         $dataOrder = [
             'customer_id' => $request->customer_id,
             'status' => 'pending'
@@ -86,6 +87,10 @@ class OrderController extends Controller
                 $order->delete(); // Hapus order yang sudah dibuat
                 return redirect()->route('orders.create')->with('error', 'Quantity field required!');
             }
+            if ($quantity > 255) {
+                $order->delete(); // Hapus order yang sudah dibuat
+                return redirect()->route('orders.create')->with('error', 'Order quantity exceeds the limit!');
+            }
 
             // Ambil harga menu dari database
             $menu = Menu::find($menu_id);
@@ -93,7 +98,7 @@ class OrderController extends Controller
 
             // Hitung total harga untuk item ini
             $total_item_price = $price * $quantity;
-                       
+
             // Tambahkan total harga item ke total bayar
             $total_bayar += $total_item_price;
 
